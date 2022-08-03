@@ -51,6 +51,7 @@ vim.keymap.set("n", "<leader>ff", function() telescope.find_files() end)
 vim.keymap.set("n", "<space>gg", function() telescope.live_grep() end)
 vim.keymap.set("n", "<leader>gg", function() telescope.live_grep() end)
 vim.keymap.set("n", "<space>fb", function() telescope.buffers() end)
+vim.keymap.set("n", "<leader>fb", function() telescope.buffers() end)
 vim.keymap.set("n", "<space>hh", function() telescope.help_tags() end)
 vim.keymap.set("n", "<leader>hh", function() telescope.help_tags() end)
 vim.keymap.set("n", "<space>cc", function() telescope.commands() end)
@@ -129,7 +130,7 @@ vim.keymap.set("n", "<leader>ht", function() _htop_toggle() end, {noremap = true
 
 -- Debugging
 local dap = require("dap")
-vim.keymap.set("n", "<F5>", function() dap.continue() end)
+vim.keymap.set("n", "<F9>", function() dap.continue() end)
 vim.keymap.set("n", "<F10>", function() dap.step_over() end)
 vim.keymap.set("n", "<F11>", function() dap.step_into() end)
 vim.keymap.set("n", "<F12>", function() dap.step_out() end)
@@ -142,12 +143,14 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNew"},{
     pattern = "*.cpp,*.hpp",
     callback = function()
         vim.keymap.set("n","<leader>cht", "<cmd>:ClangdTypeHierarchy<CR>", opts)
+        vim.keymap.set("n","<F5>", function() require("cmake").build_and_run() end, {noremap = true})
+        vim.keymap.set("n","<F6>", function() require("plugins.nvim-cmake").cmake_build() end, {noremap = true})
+        vim.keymap.set("n","<F8>", function() require("cmake").build_and_debug() end, {noremap = true})
     end
 })
 
 --NVIM-WINDOW
 vim.keymap.set("n", "<leader><leader>", function() require('nvim-window').pick() end, opts)
-
 
 
 

@@ -19,5 +19,7 @@ require('plugins.bufferline')
 require('plugins.project-nvim')
 require('plugins.comment')
 require('plugins.dap')
+require('plugins.nvim-window')
+require('plugins.nvim-cmake')
 
 require('basic-config.keymaps')
