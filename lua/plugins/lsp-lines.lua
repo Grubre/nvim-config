@@ -4,3 +4,7 @@ if not lsp_lines_loaded then
     return
 end
 lsp_lines.setup()
+
+-- Disable lsp_lines without toggling
+vim.diagnostic.config({ virtual_lines = false })
+

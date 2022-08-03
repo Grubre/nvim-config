@@ -88,9 +88,6 @@ return require('packer').startup(function()
         'Shatur/neovim-cmake',                          --CMake integration 
     }
 
-    -- Disable lsp_lines without toggling
-    vim.diagnostic.config({ virtual_lines = false })
-
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if PACKER_BOOTSTRAP then
