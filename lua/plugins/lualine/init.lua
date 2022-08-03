@@ -1,3 +1,5 @@
+local cmake_component = require("plugins.lualine.cmake-build")
+
 require('lualine').setup({
     options = {
         icons_enabled = true,
@@ -11,9 +13,9 @@ require('lualine').setup({
         always_divide_middle = true,
         globalstatus = true,
         refresh = {
-          statusline = 1000,
-          tabline = 1000,
-          winbar = 1000,
+          statusline = 100,
+          tabline = 100,
+          winbar = 100,
         }
       },
       sections = {
