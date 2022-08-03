@@ -10,7 +10,7 @@ require("clangd_extensions").setup({
     server = {
         cmd = {
             "clangd",
-            "--completion-style=bundled",
+            "--completion-style=detailed",
             "--cross-file-rename",
             "--clang-tidy",
             "--header-insertion=iwyu",

@@ -39,35 +39,31 @@ vim.keymap.set(
     { desc = "Toggle lsp_lines" }
 )
 -- Telescope Keymaps
+local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<c-p>", "<cmd>:Telescope<CR>")
 
 vim.keymap.set("n", "<space>bb", function() require("telescope").extensions.file_browser.file_browser() end)
 vim.keymap.set("n", "<space>ee", function() require("telescope").extensions.file_browser.file_browser() end)
 vim.keymap.set("n", "<leader>ee", function() require("telescope").extensions.file_browser.file_browser() end)
-vim.keymap.set("n", "<space>ff", function() require("telescope.builtin").find_files() end)
-vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files() end)
+vim.keymap.set("n", "<space>ff", function() telescope.find_files() end)
+vim.keymap.set("n", "<leader>ff", function() telescope.find_files() end)
 
-vim.keymap.set("n", "<space>gg", function() require("telescope.builtin").live_grep() end)
-vim.keymap.set("n", "<leader>gg", function() require("telescope.builtin").live_grep() end)
-vim.keymap.set("n", "<space>fb", function() require("telescope.builtin").buffers() end)
-vim.keymap.set("n", "<leader>fb", function() require("telescope.builtin").buffers() end)
-vim.keymap.set("n", "<space>hh", function() require("telescope.builtin").help_tags() end)
-vim.keymap.set("n", "<leader>hh", function() require("telescope.builtin").help_tags() end)
-vim.keymap.set("n", "<space>cc", function() require("telescope.builtin").commands() end)
-vim.keymap.set("n", "<leader>cc", function() require("telescope.builtin").commands() end)
+vim.keymap.set("n", "<space>gg", function() telescope.live_grep() end)
+vim.keymap.set("n", "<leader>gg", function() telescope.live_grep() end)
+vim.keymap.set("n", "<space>fb", function() telescope.buffers() end)
+vim.keymap.set("n", "<space>hh", function() telescope.help_tags() end)
+vim.keymap.set("n", "<leader>hh", function() telescope.help_tags() end)
+vim.keymap.set("n", "<space>cc", function() telescope.commands() end)
+vim.keymap.set("n", "<leader>cc", function() telescope.commands() end)
 
-vim.keymap.set("n", "<space>gc", function() require("telescope.builtin").git_commits() end)
-vim.keymap.set("n", "<leader>gc", function() require("telescope.builtin").git_commits() end)
-vim.keymap.set("n", "<space>gb", function() require("telescope.builtin").git_branches() end)
-vim.keymap.set("n", "<leader>gb", function() require("telescope.builtin").git_branches() end)
-vim.keymap.set("n", "<space>gs", function() require("telescope.builtin").git_status() end)
-vim.keymap.set("n", "<leader>gs", function() require("telescope.builtin").git_status() end)
-
-
+vim.keymap.set("n", "<space>gc", function() telescope.git_commits() end)
+vim.keymap.set("n", "<leader>gc", function() telescope.git_commits() end)
+vim.keymap.set("n", "<space>gb", function() telescope.git_branches() end)
+vim.keymap.set("n", "<leader>gb", function() telescope.git_branches() end)
+vim.keymap.set("n", "<space>gs", function() telescope.git_status() end)
+vim.keymap.set("n", "<leader>gs", function() telescope.git_status() end)
 
 -- LSP Keymaps
-local telescope = require("telescope.builtin")
-
 _G.lsp_keymaps = function(bufnr)
     local opts = { buffer = true, noremap = true, silent = true }
 
@@ -149,7 +145,8 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNew"},{
     end
 })
 
-
+--NVIM-WINDOW
+vim.keymap.set("n", "<leader><leader>", function() require('nvim-window').pick() end, opts)
 
 
 

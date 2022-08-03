@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
+  ["neovim-cmake"] = {
+    loaded = true,
+    path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/neovim-cmake",
+    url = "https://github.com/Shatur/neovim-cmake"
+  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/nui.nvim",
@@ -233,6 +238,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
+  },
+  ["nvim-window"] = {
+    loaded = true,
+    path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/nvim-window",
+    url = "https://gitlab.com/yorickpeterse/nvim-window"
   },
   ["packer.nvim"] = {
     loaded = true,

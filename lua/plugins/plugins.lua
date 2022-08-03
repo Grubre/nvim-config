@@ -84,6 +84,8 @@ return require('packer').startup(function()
         'mfussenegger/nvim-dap',                        --Debugger
         'rcarriga/nvim-dap-ui',                         --UI for dap
         'theHamsta/nvim-dap-virtual-text',              --Inlay debugger text
+        'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
+        'Shatur/neovim-cmake',                          --CMake integration 
     }
 
     -- Disable lsp_lines without toggling
