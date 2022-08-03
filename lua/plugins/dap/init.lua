@@ -1,5 +1,6 @@
 local dap, dapui, dapvt = require("dap"), require("dapui"), require("nvim-dap-virtual-text")
 require("plugins.dap.cpp_c_rust")
+require("plugins.dap.python")
 
 dapui.setup()
 dapvt.setup({
