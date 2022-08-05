@@ -86,6 +86,7 @@ return require('packer').startup(function()
         'theHamsta/nvim-dap-virtual-text',              --Inlay debugger text
         'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
         'Shatur/neovim-cmake',                          --CMake integration 
+        'zefei/vim-colortuner',                         --Color tuning sliders
     }
 
     -- Automatically set up your configuration after cloning packer.nvim
