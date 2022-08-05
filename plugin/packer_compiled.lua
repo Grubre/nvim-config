@@ -293,6 +293,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/vim-code-dark",
     url = "https://github.com/tomasiser/vim-code-dark"
+  },
+  ["vim-colortuner"] = {
+    loaded = true,
+    path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/vim-colortuner",
+    url = "https://github.com/zefei/vim-colortuner"
   }
 }
 
