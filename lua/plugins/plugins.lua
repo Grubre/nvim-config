@@ -90,6 +90,7 @@ return require('packer').startup(function()
         }
     else
         use {
+            'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'wbthomason/packer.nvim',                       --Packer managing itself
             'nvim-lua/plenary.nvim',                        --Dependency of some plugins
             'folke/lsp-colors.nvim',                        --Add missing colors for colorschemes
