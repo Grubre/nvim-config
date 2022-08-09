@@ -27,6 +27,7 @@ local options = {
     signcolumn = "yes",
     completeopt = { "menu", "menuone", "noselect" },
     autoread = true,
+    clipboard='unnamedplus'
 }
 for k, v in pairs(options) do
     vim.opt[k] = v
