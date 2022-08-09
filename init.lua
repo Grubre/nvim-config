@@ -19,14 +19,10 @@ require('plugins.project-nvim')
 require('plugins.comment')
 require('plugins.dap')
 require('plugins.nvim-cmake')
-if not vim.fn.has("win32") then -- Doesnt work because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
+if not vim.fn.has("win32") then -- Doesnt work on windows because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
     require('plugins.nvim-window')
     require('plugins.lsp-lines')
 end
 
 require('basic-config.keymaps')
-
-if vim.fn.exists("g:neovide") then
-    vim.g["neovide_refresh_rate"] = 144
-    vim.o.guifont='Hack NF'
-end
+require('basic-config.neovide')
