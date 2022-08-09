@@ -14,15 +14,15 @@ require('plugins.toggleterm')
 require('plugins.gitsgins')
 require('plugins.toggleterm')
 require('plugins.autopairs')
-if not vim.fn.has("win32") then
-    require('plugins.lsp-lines')
-    require('plugins.nvim-window')
-end
 require('plugins.bufferline')
 require('plugins.project-nvim')
 require('plugins.comment')
 require('plugins.dap')
 require('plugins.nvim-cmake')
+if not vim.fn.has("win32") then -- Doesnt work because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
+    require('plugins.nvim-window')
+    require('plugins.lsp-lines')
+end
 
 require('basic-config.keymaps')
 

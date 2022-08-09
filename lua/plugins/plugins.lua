@@ -64,7 +64,7 @@ return require('packer').startup(function()
             'p00f/clangd_extensions.nvim',                  --Clangd extensions
             'williamboman/mason.nvim',                      --LSP, DAP, Linters and formatters installer
             'williamboman/mason-lspconfig.nvim',            --Mason integration with LSP
-            --"https://git.sr.ht/~whynothugo/lsp_lines.nvim", --Diagonstics shown as lines
+            -- "https://git.sr.ht/~whynothugo/lsp_lines.nvim", --Diagonstics shown as lines
             'nvim-treesitter/nvim-treesitter',              --Treesitter
             'sharkdp/fd',                                   --Searches for entries in your filesystem (telescope dependency)
             'nvim-lualine/lualine.nvim',                    --Statusline
@@ -85,7 +85,7 @@ return require('packer').startup(function()
             'mfussenegger/nvim-dap',                        --Debugger
             'rcarriga/nvim-dap-ui',                         --UI for dap
             'theHamsta/nvim-dap-virtual-text',              --Inlay debugger text
-            --'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
+            -- 'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'Shatur/neovim-cmake',                          --CMake integration 
         }
     else
