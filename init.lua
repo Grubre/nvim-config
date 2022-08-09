@@ -25,4 +25,3 @@ if not vim.fn.has("win32") then -- Doesnt work on windows because packer has pro
 end
 
 require('basic-config.keymaps')
-require('basic-config.neovide')
