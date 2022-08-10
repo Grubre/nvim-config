@@ -151,11 +151,17 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNew"},{
     end
 })
 
+-- LUA specific keymaps
+vim.api.nvim_create_augroup("LUA_specific",{clear = false})
+vim.api.nvim_create_autocmd({"BufEnter", "BufNew"},{
+    pattern = "*.lua",
+    callback = function()
+        vim.keymap.set("n","<leader>xx", "<cmd>:w<CR><cmd>:source %<CR>", opts)
+            end
+})
+
 --NVIM-WINDOW
 if not vim.fn.has("win32") then
     vim.keymap.set("n", "<leader><leader>", function() require('nvim-window').pick() end, opts)
 end
-
-
-
 
