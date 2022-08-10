@@ -19,7 +19,7 @@ require('plugins.project-nvim')
 require('plugins.comment')
 require('plugins.dap')
 require('plugins.nvim-cmake')
-if not vim.fn.has("win32") then -- Doesnt work on windows because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
+if vim.fn.has("win32")==0 then -- Doesnt work on windows because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
     require('plugins.nvim-window')
     require('plugins.lsp-lines')
 end

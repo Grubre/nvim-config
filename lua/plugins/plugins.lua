@@ -39,8 +39,9 @@ vim.cmd [[
 ]]
 
 return require('packer').startup(function()
-    if vim.fn.has("win32") then
-       use {
+    if vim.fn.has("win32")==1 then
+        print("Using windows config")
+        use {
             'wbthomason/packer.nvim',                       --Packer managing itself
             'nvim-lua/plenary.nvim',                        --Dependency of some plugins
             'folke/lsp-colors.nvim',                        --Add missing colors for colorschemes
@@ -88,8 +89,11 @@ return require('packer').startup(function()
             'theHamsta/nvim-dap-virtual-text',              --Inlay debugger text
             -- 'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'Shatur/neovim-cmake',                          --CMake integration 
+            'zefei/vim-colortuner',                         --Most important plugin
+            '/home/jabuk/Projects/nvim-plugins/codeforces',
         }
     else
+        print("Using unix config")
         use {
             'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'wbthomason/packer.nvim',                       --Packer managing itself
@@ -139,6 +143,8 @@ return require('packer').startup(function()
             'theHamsta/nvim-dap-virtual-text',              --Inlay debugger text
             'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'Shatur/neovim-cmake',                          --CMake integration 
+            'zefei/vim-colortuner',                         --Most important plugin
+            '/home/jabuk/Projects/nvim-plugins/codeforces',
         }
     end
 

@@ -3,7 +3,7 @@
 --=================================--
 vim.opt.termguicolors=true
 local colorscheme = "kanagawa"
-if vim.fn.has("win32") then
+if vim.fn.has("win32")==1 then
     colorscheme = "tokyonight"
 end
 
