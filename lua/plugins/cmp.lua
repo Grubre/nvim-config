@@ -13,6 +13,10 @@ end
 require("luasnip/loaders/from_vscode").lazy_load()
 
 
+-- OPTIONS
+local max_menu_width = 80
+
+
 local kind_icons = {
   Text = "",
   Method = "m",
@@ -74,7 +78,7 @@ cmp.setup({
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-c>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm(),
-      ["<Tab>"] = cmp.mapping(function(fallback)
+      ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expandable() then
@@ -88,7 +92,7 @@ cmp.setup({
         "i",
         "s",
       }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
@@ -115,6 +119,7 @@ cmp.setup({
           calc = "[Math]",
           treesitter = "[Treesitter]",
         })[entry.source.name]
+        vim_item.abbr = string.sub(vim_item.abbr, 1, max_menu_width)
         return vim_item
       end,
     },
@@ -125,6 +130,9 @@ cmp.setup({
       { name = 'treesitter' , keyword_length = 4},
       { name = 'calc'},
       { name = 'path'},
+    },
+    experimental = {
+        ghost_text = true,
     }
 })
 

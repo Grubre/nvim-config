@@ -254,6 +254,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\Jakub\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\ripgrep",
     url = "https://github.com/BurntSushi/ripgrep"
   },
+  ["rust-tools.nvim"] = {
+    loaded = true,
+    path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
+  },
   ["telescope-file-browser.nvim"] = {
     loaded = true,
     path = "C:\\Users\\Jakub\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope-file-browser.nvim",
