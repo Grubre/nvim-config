@@ -95,7 +95,6 @@ return require('packer').startup(function()
     else
         print("Using unix config")
         use {
-            'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'wbthomason/packer.nvim',                       --Packer managing itself
             'nvim-lua/plenary.nvim',                        --Dependency of some plugins
             'folke/lsp-colors.nvim',                        --Add missing colors for colorschemes
@@ -144,9 +143,9 @@ return require('packer').startup(function()
             'https://gitlab.com/yorickpeterse/nvim-window', --Magically switch windows
             'Shatur/neovim-cmake',                          --CMake integration 
             'zefei/vim-colortuner',                         --Most important plugin
-            '/home/jabuk/Projects/nvim-plugins/codeforces',
+            '/home/jabuk/Projects/nvim-plugins/templater',
         }
-    end
+    end 
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

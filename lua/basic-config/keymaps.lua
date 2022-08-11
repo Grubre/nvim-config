@@ -157,11 +157,12 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNew"},{
     pattern = "*.lua",
     callback = function()
         vim.keymap.set("n","<leader>xx", "<cmd>:w<CR><cmd>:source %<CR>", opts)
-            end
+        vim.keymap.set("n","<leader>pt", "<Plug>PlenaryTestFile<CR>", opts)
+    end
 })
 
 --NVIM-WINDOW
-if not vim.fn.has("win32") then
+if vim.fn.has("win32")==0 then
     vim.keymap.set("n", "<leader><leader>", function() require('nvim-window').pick() end, opts)
 end
 
