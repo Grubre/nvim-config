@@ -121,6 +121,7 @@ return require('packer').startup(function()
             'williamboman/mason-lspconfig.nvim',            --Mason integration with LSP
             "https://git.sr.ht/~whynothugo/lsp_lines.nvim", --Diagonstics shown as lines
             'nvim-treesitter/nvim-treesitter',              --Treesitter
+            'nvim-treesitter/playground',                   --Treesitter playground
             'sharkdp/fd',                                   --Searches for entries in your filesystem (telescope dependency)
             'nvim-lualine/lualine.nvim',                    --Statusline
             'akinsho/bufferline.nvim',                      --Bufferline
@@ -144,6 +145,8 @@ return require('packer').startup(function()
             'Shatur/neovim-cmake',                          --CMake integration 
             'zefei/vim-colortuner',                         --Most important plugin
             '/home/jabuk/Projects/nvim-plugins/templater',
+            { "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, },
+
         }
     end 
 
