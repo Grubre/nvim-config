@@ -100,10 +100,6 @@ _G.lsp_keymaps = function(bufnr)
     vim.keymap.set("n", "<leader>q", function() telescope.diagnostics(require('telescope.themes').get_ivy()) end, opts)
 end
 
--- Bufferline Keymaps
-vim.keymap.set("n", "<A-Left>", "<cmd>BufferLineCyclePrev<CR>")
-vim.keymap.set("n", "<A-Right>", "<cmd>BufferLineCycleNext<CR>")
-
 -- Search and replace full word (can be repeated with '.')
 vim.keymap.set("n", "<leader>sr", ":let @/='\\<'.expand('<cword>').'\\>'<CR>cgn")
 

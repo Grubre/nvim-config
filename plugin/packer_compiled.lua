@@ -79,11 +79,6 @@ _G.packer_plugins = {
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["bufferline.nvim"] = {
-    loaded = true,
-    path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
-    url = "https://github.com/akinsho/bufferline.nvim"
-  },
   ["clangd_extensions.nvim"] = {
     loaded = true,
     path = "/home/jabuk/.local/share/nvim/site/pack/packer/start/clangd_extensions.nvim",

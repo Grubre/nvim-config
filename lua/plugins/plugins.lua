@@ -70,7 +70,6 @@ return require('packer').startup(function()
             'nvim-treesitter/nvim-treesitter',              --Treesitter
             'sharkdp/fd',                                   --Searches for entries in your filesystem (telescope dependency)
             'nvim-lualine/lualine.nvim',                    --Statusline
-            'akinsho/bufferline.nvim',                      --Bufferline
             {'nvim-telescope/telescope.nvim',tag = '0.1.0'},--Telescope
             'nvim-telescope/telescope-file-browser.nvim',   --Telescope file browser extension
             --{'nvim-telescope/telescope-fzf-native.nvim', run ='cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }, --Telescope FZF extensions
@@ -124,7 +123,6 @@ return require('packer').startup(function()
             'nvim-treesitter/playground',                   --Treesitter playground
             'sharkdp/fd',                                   --Searches for entries in your filesystem (telescope dependency)
             'nvim-lualine/lualine.nvim',                    --Statusline
-            'akinsho/bufferline.nvim',                      --Bufferline
             {'nvim-telescope/telescope.nvim',tag = '0.1.0'},--Telescope
             'nvim-telescope/telescope-file-browser.nvim',   --Telescope file browser extension
             {'nvim-telescope/telescope-fzf-native.nvim', run ='make' }, --Telescope FZF extensions
