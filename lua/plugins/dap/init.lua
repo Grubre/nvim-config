@@ -4,16 +4,16 @@ require("plugins.dap.python")
 
 dapui.setup()
 dapvt.setup({
-    highlight_changed_variables = true,
-    virt_text_win_col = 80
+	highlight_changed_variables = true,
+	virt_text_win_col = 80,
 })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+	dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end

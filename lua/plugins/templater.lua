@@ -1,5 +1,5 @@
 require("templater").setup({
-    variables = {
-        ["TEST2"] = require("templater.templates").string("abc")
-    }
+	variables = {
+		["TEST2"] = require("templater.templates").string("abc"),
+	},
 })
