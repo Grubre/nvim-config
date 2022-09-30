@@ -86,7 +86,7 @@ end
 
 ---- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-vim.g.format_on_save = true
+vim.g.format_on_save = false
 M.on_attach = function(client, bufnr)
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client, bufnr)
