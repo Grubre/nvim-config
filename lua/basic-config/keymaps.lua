@@ -237,3 +237,16 @@ vim.keymap.set("n", "<leader>fs", function()
         vim.g.format_on_save = false
     end
 end, opts)
+
+vim.g.focusmode = true
+vim.keymap.set("n", "<space><space>", function()
+    if vim.g.focusmode then
+        require('lualine').hide({ unhide = true })
+        vim.opt["laststatus"] = 3
+        vim.g.focusmode = false
+    else
+        require('lualine').hide()
+        vim.opt["laststatus"] = 0
+        vim.g.focusmode = true
+    end
+end, opts)

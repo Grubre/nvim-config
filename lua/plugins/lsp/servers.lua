@@ -27,11 +27,6 @@ require("clangd_extensions").setup({
         },
     },
 })
---lspconfig['clangd'].setup{
---on_attach = on_attach,
---flags = lsp_flags,
---capabilities = capabilities,
---}
 lspconfig["pyright"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
@@ -55,39 +50,10 @@ lspconfig["sumneko_lua"].setup({
         },
     },
 })
-local rust_opts = {
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        inlay_hints = {
-            show_parameter_hints = true,
-            parameter_hints_prefix = "(",
-            other_hints_prefix = ")",
-        },
-        on_initialized = function(_)
-            vim.notify("Rust initialized!")
-        end,
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    server = {
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        settings = {
-            ["rust-analyzer"] = {
-                diagnostic = {
-                    messageDelay = 200,
-                },
-            },
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-        },
-        standalone = false,
-    },
+lspconfig["rust_analyzer"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities
 }
-require("rust-tools").setup(rust_opts)
 
 --CMAKE
 lspconfig["cmake"].setup({

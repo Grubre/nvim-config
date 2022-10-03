@@ -62,7 +62,6 @@ return require("packer").startup(function()
             "neovim/nvim-lspconfig", --LSP Configs
             --'jose-elias-alvarez/null-ls.nvim',            --Linter engine
             "p00f/clangd_extensions.nvim", --Clangd extensions
-            "simrat39/rust-tools.nvim", --Extra rust tools
             "williamboman/mason.nvim", --LSP, DAP, Linters and formatters installer
             "williamboman/mason-lspconfig.nvim", --Mason integration with LSP
             -- "https://git.sr.ht/~whynothugo/lsp_lines.nvim", --Diagonstics shown as lines
