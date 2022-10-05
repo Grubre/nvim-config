@@ -246,7 +246,7 @@ vim.keymap.set("n", "<space><space>", function()
         vim.g.focusmode = false
     else
         require('lualine').hide()
-        vim.opt["laststatus"] = 0
+        vim.opt["laststatus"] = 1
         vim.g.focusmode = true
     end
 end, opts)
