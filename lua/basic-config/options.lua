@@ -39,3 +39,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, { pattern = "*", comm
 vim.opt.shortmess:append("c")
 
 vim.opt.whichwrap:append("h,l,<,>,[,],b,s")
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+    pattern = {"*.rs"},
+    callback = function()
+       vim.cmd('write')
+    end
+})
