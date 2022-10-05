@@ -59,7 +59,6 @@ return require("packer").startup(function()
     "hrsh7th/cmp-calc", --Cmp integration with math
     "saadparwaiz1/cmp_luasnip", --Cmp integration with snippets
     "neovim/nvim-lspconfig", --LSP Configs
-    'jose-elias-alvarez/null-ls.nvim',            --Linter engine
     "p00f/clangd_extensions.nvim", --Clangd extensions
     "simrat39/rust-tools.nvim", --Extra rust tools
     "williamboman/mason.nvim", --LSP, DAP, Linters and formatters installer
