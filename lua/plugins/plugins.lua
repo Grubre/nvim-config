@@ -91,13 +91,14 @@ return require("packer").startup(function()
     "lewis6991/impatient.nvim",--Speeds up load times
     "grubre/templater.nvim",
     {
-	"iamcco/markdown-preview.nvim",
-	run = "cd app && npm install",
-	setup = function()
-	    vim.g.mkdp_filetypes = { "markdown" }
-	end,
-	ft = { "markdown" },
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
     },
+    "https://github.com/ggandor/leap.nvim",
 })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

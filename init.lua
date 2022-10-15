@@ -27,3 +27,4 @@ require("basic-config.keymaps")
 require("basic-config.neovide")
 
 require("basic-config.options")
+require("plugins.leap")
