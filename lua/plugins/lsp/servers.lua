@@ -54,6 +54,7 @@ local rt = require("rust-tools")
 
 rt.setup({
     server = {
+        cmd = { "rustup", "run", "nightly", "rust-analyzer" },
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
