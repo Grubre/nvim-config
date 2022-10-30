@@ -95,6 +95,16 @@ vim.keymap.set("n", "<leader>gs", function()
     telescope.git_status()
 end)
 
+
+-- Tab control
+vim.keymap.set("n", "<a-t>", "<cmd>tabnew<CR>");
+vim.keymap.set("n", "<a-c>", "<cmd>tabclose<CR>");
+vim.keymap.set("n", "<a-l>", "<cmd>tabnext<CR>");
+vim.keymap.set("n", "<a-right>", "<cmd>tabnext<CR>");
+vim.keymap.set("n", "<a-h>", "<cmd>tabprev<CR>");
+vim.keymap.set("n", "<a-left>", "<cmd>tabprev<CR>");
+
+
 -- LSP Keymaps
 _G.lsp_keymaps = function(bufnr)
     local opts = { buffer = true, noremap = true, silent = true }
@@ -144,10 +154,8 @@ vim.keymap.set("n", "<leader>sr", ":let @/='\\<'.expand('<cword>').'\\>'<CR>cgn"
 
 -- Terminal keymaps
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<c-t>", '<Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
-vim.keymap.set("i", "<c-t>", '<Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
-vim.keymap.set("n", "<leader>tt", '<Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
-vim.keymap.set("i", "<leader>tt", '<Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
+vim.keymap.set("n", "<leader>t", '<Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
+vim.keymap.set("i", "<leader>t", '<Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
 
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
 vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
