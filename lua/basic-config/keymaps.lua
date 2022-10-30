@@ -1,10 +1,6 @@
 --=================================--
 --KEYMAPS--
 --=================================--
--- Unmap s--
-vim.keymap.set("n", "s", "<Nop>")
-vim.keymap.set("x", "s", "<Nop>")
-
 -- Map 'alt+j/l' to move the line up or down
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==")
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==")
