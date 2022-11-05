@@ -71,6 +71,8 @@ rt.setup({
     }
 })
 
+lspconfig["bashls"].setup{}
+
 --CMAKE
 lspconfig["cmake"].setup({
     on_attach = on_attach,
