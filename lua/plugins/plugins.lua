@@ -78,8 +78,8 @@ return require("packer").startup(function()
     "MunifTanjim/nui.nvim", --GUI component lib
     "stevearc/dressing.nvim", --Changes default neovim inputs and selects to UI
     { "akinsho/toggleterm.nvim", tag = "v2.*" }, --Terminal plugin
+    "ray-x/lsp_signature.nvim", --Shows function signature
     "windwp/nvim-autopairs", --AutoPairs
-    "Issafalcon/lsp-overloads.nvim", --Shows function signature when typing
     "numToStr/Comment.nvim", --Allows commenting
     "mfussenegger/nvim-dap", --Debugger
     "rcarriga/nvim-dap-ui", --UI for dap

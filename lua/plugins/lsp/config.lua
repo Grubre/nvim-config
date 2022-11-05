@@ -62,18 +62,6 @@ local function lsp_highlight_document(client, bufnr)
     end
 end
 
-local function lsp_overloads(client)
-    if client.server_capabilities.signatureHelpProvider then
-        require("lsp-overloads").setup(client, {
-            keymaps = {
-                next_signature = "<tab>",
-                previous_signature = "<s-tab>",
-                next_parameter = "<C-l>",
-                previous_parameter = "<C-h>",
-            },
-        })
-    end
-end
 
 -- Rename popup window
 M.rename = function()
@@ -90,7 +78,7 @@ vim.g.format_on_save = false
 M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
     lsp_highlight_document(client, bufnr)
-    lsp_overloads(client)
+    require "lsp_signature".on_attach({}, bufnr)
     if client.supports_method("textDocument/formatting") then
         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
         vim.api.nvim_create_autocmd("BufWritePre", {
