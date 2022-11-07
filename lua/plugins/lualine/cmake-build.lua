@@ -3,7 +3,7 @@
 local M = {}
 
 M.cmake_build_func = function()
-	progress = require("plugins.nvim-cmake").progress
+	local progress = require("plugins.nvim-cmake").progress
 
 	if progress == "[100%]" then
 		return ""
