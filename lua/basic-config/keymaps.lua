@@ -28,9 +28,7 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("i", "jk", "<Esc>")
 -- Open netrw
 -- Toggle lsp_lines
-if not vim.fn.has("win32") then
-    vim.keymap.set({ "n", "v" }, "<Leader>sl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-end
+vim.keymap.set({ "n", "v" }, "<Leader>sl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 -- Telescope Keymaps
 local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<c-p>", "<cmd>:Telescope<CR>")
