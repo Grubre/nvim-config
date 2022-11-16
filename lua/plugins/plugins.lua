@@ -89,7 +89,7 @@ return require("packer").startup(function()
     "zefei/vim-colortuner", --Most important plugin
     'folke/todo-comments.nvim',--TO DO comments
     "lewis6991/impatient.nvim",--Speeds up load times
-    "grubre/templater.nvim",
+    "grubre/templater.nvim",--File templates
     {
         "iamcco/markdown-preview.nvim",
         run = "cd app && npm install",
@@ -98,7 +98,8 @@ return require("packer").startup(function()
         end,
         ft = { "markdown" },
     },
-    "https://github.com/ggandor/leap.nvim",
+    "https://github.com/ggandor/leap.nvim",-- S and s motions
+    "kevinhwang91/nvim-hlslens",--Search help
 })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
