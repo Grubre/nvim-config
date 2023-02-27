@@ -252,3 +252,5 @@ vim.keymap.set("n", "<space><space>", function()
         vim.g.focusmode = true
     end
 end, opts)
+
+vim.api.nvim_create_user_command('Cp', function(opts) require('templater').use_template({name = 'cpp_comp'}) end, {nargs = 0})

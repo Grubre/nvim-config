@@ -18,6 +18,7 @@ dap.configurations.cpp = {
 		end,
 		cwd = "${workspaceFolder}",
 		args = {},
+        runInTerminal = true,
 	},
 }
 

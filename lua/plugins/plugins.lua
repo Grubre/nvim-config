@@ -45,6 +45,7 @@ return require("packer").startup(function()
     "folke/lsp-colors.nvim", --Add missing colors for colorschemes
     "tomasiser/vim-code-dark", --Code Dark colorscheme
     "rebelot/kanagawa.nvim", --Kanagawa colorscheme
+    "Shatur/neovim-ayu", --Ayu colorscheme
     "eddyekofo94/gruvbox-flat.nvim", --Gruvbox flat colorscheme
     "folke/tokyonight.nvim", --Tokyo Night colorscheme
     "kyazdani42/nvim-web-devicons", --Additional icons
@@ -100,6 +101,7 @@ return require("packer").startup(function()
     },
     "https://github.com/ggandor/leap.nvim",-- S and s motions
     "kevinhwang91/nvim-hlslens",--Search help
+    "jalvesaq/Nvim-R",--R support
 })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
