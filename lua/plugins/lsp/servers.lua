@@ -32,7 +32,7 @@ lspconfig["pyright"].setup({
     flags = lsp_flags,
     capabilities = capabilities,
 })
-lspconfig["sumneko_lua"].setup({
+lspconfig["lua_ls"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -54,7 +54,7 @@ local rt = require("rust-tools")
 
 rt.setup({
     server = {
-        cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+        cmd = { "rustup", "run", "stable", "rust-analyzer" },
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
