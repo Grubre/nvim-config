@@ -38,6 +38,8 @@ vim.cmd([[
     augroup end
 ]])
 
+
+
 return require("packer").startup(function()
     use({
     "wbthomason/packer.nvim", --Packer managing itself
@@ -45,6 +47,7 @@ return require("packer").startup(function()
     "folke/lsp-colors.nvim", --Add missing colors for colorschemes
     "tomasiser/vim-code-dark", --Code Dark colorscheme
     "rebelot/kanagawa.nvim", --Kanagawa colorscheme
+    "bluz71/vim-moonfly-colors", -- Moonfly colorscheme
     "Shatur/neovim-ayu", --Ayu colorscheme
     "eddyekofo94/gruvbox-flat.nvim", --Gruvbox flat colorscheme
     "folke/tokyonight.nvim", --Tokyo Night colorscheme
