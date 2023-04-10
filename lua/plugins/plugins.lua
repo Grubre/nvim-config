@@ -91,6 +91,7 @@ return require("packer").startup(function()
     "https://gitlab.com/yorickpeterse/nvim-window", --Magically switch windows
     "Shatur/neovim-cmake", --CMake integration
     "zefei/vim-colortuner", --Most important plugin
+    "norcalli/nvim-colorizer.lua", -- Displays RGB colors
     'folke/todo-comments.nvim',--TO DO comments
     "lewis6991/impatient.nvim",--Speeds up load times
     "grubre/templater.nvim",--File templates
