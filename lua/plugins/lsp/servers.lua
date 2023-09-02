@@ -6,32 +6,28 @@ local lsp_flags = config.flags
 local lspconfig = require("lspconfig")
 local capabilities = config.capabilities
 
-require("clangd_extensions").setup({
-    server = {
-        cmd = {
-            "clangd",
-            "--completion-style=bundled",
-            "--cross-file-rename",
-            "--clang-tidy",
-            "--header-insertion=iwyu",
-            "--background-index",
-        },
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        init_options = {
-            clangdFileStatus = true, -- Provides information about activity on clangd’s per-file worker thread
-            usePlaceholders = true,
-            completeUnimported = true,
-            semanticHighlighting = true,
-        },
+require("clangd_extensions").setup()
+
+require("lspconfig").clangd.setup({
+    cmd = {
+        "clangd",
+        "--completion-style=bundled",
+        "--cross-file-rename",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--background-index",
     },
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
 })
+
 lspconfig["pyright"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 })
+
 lspconfig["lua_ls"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
