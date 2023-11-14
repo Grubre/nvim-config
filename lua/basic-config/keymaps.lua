@@ -152,8 +152,8 @@ vim.keymap.set("n", "<leader>sr", ":let @/='\\<'.expand('<cword>').'\\>'<CR>cgn"
 
 -- Terminal keymaps
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>t", '<Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
-vim.keymap.set("i", "<leader>t", '<Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
+vim.keymap.set("n", "<leader>tt", ':tabnew<CR>:terminal<CR>', opts)
+vim.keymap.set("n", "<leader>tf", '<Cmd>exe v:count1 . "ToggleTerm"<CR>', opts)
 
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
 vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
@@ -196,22 +196,25 @@ end)
 
 -- CPP specific keymaps
 -- TO DO (KEYMAPY DO FUNKCJI CLANGD)
-vim.api.nvim_create_augroup("CPP_specific", { clear = false })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufNew" }, {
-    pattern = "*.cpp,*.hpp",
-    callback = function()
-        vim.keymap.set("n", "<leader>cht", "<cmd>:ClangdTypeHierarchy<CR>", opts)
-        vim.keymap.set("n", "<F5>", function()
-            require("cmake").build_and_run()
-        end, { noremap = true })
-        vim.keymap.set("n", "<F6>", function()
-            require("plugins.nvim-cmake").cmake_build()
-        end, { noremap = true })
-        vim.keymap.set("n", "<F8>", function()
-            require("cmake").build_and_debug()
-        end, { noremap = true })
-    end,
-})
+-- vim.api.nvim_create_augroup("CPP_specific", { clear = false })
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufNew" }, {
+--     pattern = "*.cpp,*.hpp",
+--     callback = function()
+--         vim.keymap.set("n", "<leader>cht", "<cmd>:ClangdTypeHierarchy<CR>", opts)
+--         vim.keymap.set("n", "<F5>", function()
+--             require("cmake").build_and_run()
+--         end, { noremap = true })
+--         vim.keymap.set("n", "<F6>", function()
+--             require("plugins.nvim-cmake").cmake_build()
+--         end, { noremap = true })
+--         vim.keymap.set("n", "<F8>", function()
+--             require("cmake").build_and_debug()
+--         end, { noremap = true })
+--     end,
+-- })
+
+-- COMPILATION
+-- TO DO
 
 -- LUA specific keymaps
 vim.api.nvim_create_augroup("LUA_specific", { clear = false })
@@ -254,3 +257,6 @@ vim.keymap.set("n", "<space><space>", function()
 end, opts)
 
 vim.api.nvim_create_user_command('Cp', function(opts) require('templater').use_template({name = 'cpp_comp'}) end, {nargs = 0})
+
+vim.keymap.set("n", "<leader>Ed", ":silent! Texplore %:p:h<CR>", {silent = true})
+vim.keymap.set("n", "<leader>Ew", ":silent! Texplore<CR>", {silent = true})

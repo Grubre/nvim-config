@@ -72,7 +72,7 @@ return require("packer").startup(function()
     "nvim-treesitter/playground", --Treesitter playground
     "sharkdp/fd", --Searches for entries in your filesystem (telescope dependency)
     "nvim-lualine/lualine.nvim", --Statusline
-    { "nvim-telescope/telescope.nvim", tag = "0.1.0" }, --Telescope
+    { "nvim-telescope/telescope.nvim", tag = "0.1.x" }, --Telescope
     "nvim-telescope/telescope-file-browser.nvim", --Telescope file browser extension
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }, --Telescope FZF extensions
     "BurntSushi/ripgrep", --Grep (used for telescope)
@@ -106,6 +106,7 @@ return require("packer").startup(function()
     "https://github.com/ggandor/leap.nvim",-- S and s motions
     "kevinhwang91/nvim-hlslens",--Search help
     "jalvesaq/Nvim-R",--R support
+    "github/copilot.vim" -- copilot
 })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
