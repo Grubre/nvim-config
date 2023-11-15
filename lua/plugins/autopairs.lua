@@ -1,21 +1,21 @@
 local autopairs_loaded, autopairs = pcall(require, "nvim-autopairs")
 if not autopairs_loaded then
-	vim.notify("Autopairs failed to load!")
-	return
+    vim.notify("Autopairs failed to load!")
+    return
 end
 
 autopairs.setup({
-	enable_check_bracket_line = true,
-	fast_wrap = {
-		map = "<a-e>",
-		chars = { "{", "[", "(", '"', "'" },
-		pattern = [=[[%'%"%)%>%]%)%}%,]]=],
-		end_key = "$",
-		keys = "qwertyuiopzxcvbnmasdfghjkl",
-		check_comma = true,
-		highlight = "Search",
-		highlight_grey = "Comment",
-	},
+    enable_check_bracket_line = true,
+    fast_wrap = {
+        map = "<a-e>",
+        chars = { "{", "[", "(", '"', "'" },
+        pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+        end_key = "$",
+        keys = "qwertyuiopzxcvbnmasdfghjkl",
+        check_comma = true,
+        highlight = "Search",
+        highlight_grey = "Comment",
+    },
 })
 
 -- If you want insert `(` after select function or method item

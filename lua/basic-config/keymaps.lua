@@ -258,5 +258,7 @@ end, opts)
 
 vim.api.nvim_create_user_command('Cp', function(opts) require('templater').use_template({name = 'cpp_comp'}) end, {nargs = 0})
 
-vim.keymap.set("n", "<leader>Ed", ":silent! Texplore %:p:h<CR>", {silent = true})
-vim.keymap.set("n", "<leader>Ew", ":silent! Texplore<CR>", {silent = true})
+-- vim.keymap.set("n", "<leader>Ed", ":silent! Texplore %:p:h<CR>", {silent = true})
+-- vim.keymap.set("n", "<leader>Ew", ":silent! Texplore<CR>", {silent = true})
+
+vim.keymap.set("n", "<c-t>", ":silent! NvimTreeFindFileToggle<CR>", {silent = true})
