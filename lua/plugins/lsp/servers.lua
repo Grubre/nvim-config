@@ -8,6 +8,7 @@ local capabilities = config.capabilities
 
 require("clangd_extensions").setup()
 
+capabilities.offsetEncoding = { "utf-16" } -- fixes a bug where on each keystroke in input mode an error pops up
 require("lspconfig").clangd.setup({
     cmd = {
         "clangd",
@@ -74,4 +75,14 @@ lspconfig["cmake"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+})
+
+-- VERILOG
+lspconfig["svls"].setup({
+    server = {
+        cmd = { "svls", "-d" },
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities,
+    }
 })

@@ -103,5 +103,6 @@ M.lsp_flags = {
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+M.capabilities.offsetEncoding = { "utf-8", "utf-16" }
 
 return M
