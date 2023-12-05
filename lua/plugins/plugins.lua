@@ -112,18 +112,36 @@ return require("packer").startup(function()
             event = "InsertEnter",
             config = function()
                 require("copilot").setup({
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
+                    panel = {
+                        enabled = true,
+                        auto_refresh = true,
+                    },
+                    suggestion = {
+                        enabled = true,
+                        auto_trigger = true,
+                        accept = false, -- disable built-in keymapping
+                    },
                 })
+
+                local cmp_status_ok, cmp = pcall(require, "cmp")
+                if cmp_status_ok then
+                    cmp.event:on("menu_opened", function()
+                        vim.b.copilot_suggestion_hidden = true
+                    end)
+
+                    cmp.event:on("menu_closed", function()
+                        vim.b.copilot_suggestion_hidden = false
+                    end)
+                end
             end,
         }, -- copilot
-        {
-            "zbirenbaum/copilot-cmp",
-            after = { "copilot.lua" },
-            config = function()
-                require("copilot_cmp").setup()
-            end
-        },
+        -- {
+        --     "zbirenbaum/copilot-cmp",
+        --     after = { "copilot.lua" },
+        --     config = function()
+        --         require("copilot_cmp").setup()
+        --     end
+        -- },
         "nvim-tree/nvim-tree.lua" -- File explorer
     })
     -- Automatically set up your configuration after cloning packer.nvim

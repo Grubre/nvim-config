@@ -43,7 +43,7 @@ local kind_icons = {
     TypeParameter = "",
     Calc = "烈",
     Treesitter = "",
-    Copilot = "",
+    -- Copilot = "",
 }
 
 local has_words_before = function()
@@ -77,16 +77,18 @@ cmp.setup({
     mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
+        ["<Up>"] = cmp.mapping.select_prev_item(),
+        ["<Down>"] = cmp.mapping.select_next_item(),
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-c>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm(),
         ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            elseif luasnip.expandable() then
+            if luasnip.expandable() then
                 luasnip.expand()
+            elseif require("copilot.suggestion").is_visible() then
+                require("copilot.suggestion").accept()
             elseif luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
             else
@@ -97,9 +99,7 @@ cmp.setup({
             "s",
         }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
+            if luasnip.jumpable(-1) then
                 luasnip.jump(-1)
             else
                 fallback()
@@ -122,7 +122,7 @@ cmp.setup({
                 path = "[Path]",
                 calc = "[Math]",
                 treesitter = "[Treesitter]",
-                copilot = "[Copilot]",
+                -- copilot = "[Copilot]",
             })[entry.source.name]
             vim_item.abbr = string.sub(vim_item.abbr, 1, max_menu_width)
             return vim_item
@@ -131,7 +131,7 @@ cmp.setup({
     sources = {
         { name = "luasnip",    group_index = 1 },
         { name = "nvim_lsp",   group_index = 1 },
-        { name = "copilot",    group_index = 1 },
+        -- { name = "copilot",    group_index = 1 },
         { name = "buffer",     group_index = 2, keyword_length = 4 },
         { name = "treesitter", group_index = 2, keyword_length = 4 },
         { name = "calc",       group_index = 2 },
@@ -154,4 +154,4 @@ cmp.setup.cmdline(":", {
     },
 })
 
-vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
