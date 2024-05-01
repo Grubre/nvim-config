@@ -35,6 +35,9 @@ for k, v in pairs(options) do
     vim.opt[k] = v
 end
 
+vim.filetype.add({ extension = { fs = 'glsl' }})
+vim.filetype.add({ extension = { vs = 'glsl' }})
+
 -- Automatically refresh file changes after entering a buffer
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, { pattern = "*", command = "checktime" })
 

@@ -142,7 +142,8 @@ return require("packer").startup(function()
         --         require("copilot_cmp").setup()
         --     end
         -- },
-        "nvim-tree/nvim-tree.lua" -- File explorer
+        "nvim-tree/nvim-tree.lua", -- File explorer
+        "nvim-neotest/nvim-nio"
     })
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
