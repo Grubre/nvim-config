@@ -46,8 +46,9 @@ return require("packer").startup(function()
         "nvim-lua/plenary.nvim",                                       --Dependency of some plugins
         "folke/lsp-colors.nvim",                                       --Add missing colors for colorschemes
         "tomasiser/vim-code-dark",                                     --Code Dark colorscheme
+        { "catppuccin/nvim", as = "catppuccin" },                      --Catpuccin colorscheme
         "rebelot/kanagawa.nvim",                                       --Kanagawa colorscheme
-        "bluz71/vim-moonfly-colors",                                   -- Moonfly colorscheme
+        "bluz71/vim-moonfly-colors",                                   --Moonfly colorscheme
         "Shatur/neovim-ayu",                                           --Ayu colorscheme
         "eddyekofo94/gruvbox-flat.nvim",                               --Gruvbox flat colorscheme
         "folke/tokyonight.nvim",                                       --Tokyo Night colorscheme
@@ -72,7 +73,7 @@ return require("packer").startup(function()
         "nvim-treesitter/playground",                                  --Treesitter playground
         "sharkdp/fd",                                                  --Searches for entries in your filesystem (telescope dependency)
         "nvim-lualine/lualine.nvim",                                   --Statusline
-        { "nvim-telescope/telescope.nvim",            tag = "0.1.x" }, --Telescope
+        { "nvim-telescope/telescope.nvim", tag = "0.1.x" },            --Telescope
         "nvim-telescope/telescope-file-browser.nvim",                  --Telescope file browser extension
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },  --Telescope FZF extensions
         "BurntSushi/ripgrep",                                          --Grep (used for telescope)
@@ -81,7 +82,7 @@ return require("packer").startup(function()
         "lukas-reineke/indent-blankline.nvim",                         --Indent Blankline
         "MunifTanjim/nui.nvim",                                        --GUI component lib
         "stevearc/dressing.nvim",                                      --Changes default neovim inputs and selects to UI
-        { "akinsho/toggleterm.nvim", tag = "v2.*" },                   --Terminal plugin
+        { "akinsho/toggleterm.nvim",                  tag = "v2.*" },  --Terminal plugin
         "ray-x/lsp_signature.nvim",                                    --Shows function signature
         "windwp/nvim-autopairs",                                       --AutoPairs
         "numToStr/Comment.nvim",                                       --Allows commenting
