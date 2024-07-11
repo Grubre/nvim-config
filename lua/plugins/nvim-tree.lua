@@ -31,3 +31,5 @@ require("nvim-tree").setup({
     },
     on_attach = my_on_attach,
 })
+
+vim.api.nvim_create_user_command('E', function(opts) require('nvim-tree.api').tree.open() end, {nargs = 0})
