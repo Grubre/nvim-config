@@ -1,6 +1,6 @@
 return {
-  "yorickpeterse/nvim-window", opts = {
-    chars = {
+    "yorickpeterse/nvim-window", opts = {
+        chars = {
             "1",
             "2",
             "3",
@@ -37,5 +37,5 @@ return {
             "y",
             "z",
         },
-  }
+    }
 }

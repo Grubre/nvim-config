@@ -23,6 +23,18 @@ return {
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = true,
             },
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn", -- snt to `false` to disable one of the mappings
+                    node_incremental = "grn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                },
+            },
+            indent = {
+                enable = true
+            }
         })
     end,
 }

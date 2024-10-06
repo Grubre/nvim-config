@@ -16,7 +16,6 @@ end
 -- Add lazy to the `runtimepath`, this allows us to `require` it.
 ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
-
 -- Set up lazy, and load `lua/plugins/` directory
 require("lazy").setup({ import = "plugins" }, {
   change_detection = {

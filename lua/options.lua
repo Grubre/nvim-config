@@ -47,3 +47,7 @@ vim.opt.whichwrap:append("h,l,<,>,[,],b,s")
 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('sorbet')
+
+vim.wo.foldmethod = 'expr'
+vim.wo.fen = false
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
