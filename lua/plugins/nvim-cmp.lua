@@ -38,7 +38,12 @@ end
 
 local M = {
     "hrsh7th/nvim-cmp",
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'FelipeLema/cmp-async-path', 'hrsh7th/cmp-cmdline' },
+    dependencies = {
+        'hrsh7th/cmp-nvim-lsp',
+        'FelipeLema/cmp-async-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-buffer'
+    },
 }
 
 M.config = function()
@@ -80,7 +85,7 @@ M.config = function()
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if luasnip.expandable() then
                     luasnip.expand()
-                elseif _G.has_copilot and require("copilot.suggestion").is_visible() then
+                elseif require("copilot.suggestion").is_visible() then
                     require("copilot.suggestion").accept()
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
