@@ -51,3 +51,6 @@ vim.cmd.colorscheme('catppuccin')
 vim.wo.foldmethod = 'expr'
 vim.wo.fen = false
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+vim.opt.list = true
+-- vim.opt.listchars:append("space:⋅")
