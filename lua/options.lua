@@ -44,3 +44,6 @@ vim.opt.shortmess:append("c")
 vim.opt.formatoptions:remove "o"
 
 vim.opt.whichwrap:append("h,l,<,>,[,],b,s")
+
+vim.opt.termguicolors = true
+vim.cmd.colorscheme('sorbet')
