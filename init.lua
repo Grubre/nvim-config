@@ -1,36 +1,27 @@
-require("basic-config.colorscheme")
+vim.g.mapleader = "\\"
 
-require("plugins.plugins")
-require("plugins.cmp")
-require("plugins.lsp")
-require("plugins.mason")
-require("plugins.lualine")
-require("plugins.treesitter")
-require("plugins.indent-blankline")
-require("plugins.telescope")
-require("plugins.dressing")
-require("plugins.toggleterm")
-require("plugins.gitsgins")
-require("plugins.toggleterm")
-require("plugins.autopairs")
-require("plugins.project-nvim")
-require("plugins.lsp-signature")
-require("plugins.comment")
-require("plugins.dap")
-require("plugins.nvim-cmake")
-require("plugins.templater")
-require("plugins.leap")
-require("plugins.impatient")
-require("plugins.todo-comments")
-require("plugins.hlslens")
-require("plugins.colorizer")
-require("plugins.nvim-tree")
-if vim.fn.has("win32") == 0 then -- Doesnt work on windows because packer has problem creating directories with names of these plugins (one is from gitlab and the other(?))
-    require("plugins.nvim-window")
-    require("plugins.lsp-lines")
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system {
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  }
 end
 
-require("basic-config.keymaps")
-require("basic-config.neovide")
+-- Add lazy to the `runtimepath`, this allows us to `require` it.
+---@diagnostic disable-next-line: undefined-field
+vim.opt.rtp:prepend(lazypath)
 
-require("basic-config.options")
+-- Set up lazy, and load `lua/plugins/` directory
+require("lazy").setup({ import = "plugins" }, {
+  change_detection = {
+    notify = false,
+  },
+})
+
+require('options')
+require('keymaps')
