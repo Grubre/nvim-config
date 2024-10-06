@@ -26,6 +26,53 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("n", "<leader>l", ":nohl<CR>")
 
 -- ================================================================
+-- LSP
+-- ================================================================
+local telescope = require("telescope.builtin")
+_G.lsp_keymaps = function(bufnr)
+    local opts = { buffer = true, noremap = true, silent = true }
+
+    -- Displays hover information about the symbol under the cursor
+    vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+    -- or use command
+    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    -- Jumps to definition (if there are multiple - lists them)
+    vim.keymap.set("n", "gd", function()
+        telescope.lsp_definitions()
+    end, opts)
+    -- Jumps to implementations (if there are multiple - lists them)
+    vim.keymap.set("n", "gi", function()
+        telescope.lsp_implementations()
+    end, opts)
+    -- Jumps to type definition (if there are multiple - lists them)
+    vim.keymap.set("n", "gt", function()
+        telescope.lsp_type_definitions()
+    end, opts)
+    -- Lists all the references
+    vim.keymap.set("n", "gr", function()
+        telescope.lsp_references()
+    end, opts)
+    -- Displays a function's signature information
+
+    vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+    vim.keymap.set("n", "cd", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+    -- Selects a code action available at the current cursor position
+    vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+    vim.keymap.set("x", "<leader>ca", "<cmd>lua vim.lsp.buf.range_code_action()<cr>", opts)
+    vim.keymap.set("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    -- Move to the previous diagnostic
+    vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
+    -- Move to the next diagnostic
+    vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
+    -- show line diagnostic
+    vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    -- show diagnostic list
+    vim.keymap.set("n", "<leader>q", function()
+        telescope.diagnostics(require("telescope.themes").get_ivy())
+    end, opts)
+end
+
+-- ================================================================
 -- PLUGINS
 -- ================================================================
 
@@ -51,9 +98,7 @@ local open_tree = function() nvim_tree_api.tree.open({find_file = true, focus = 
 vim.keymap.set("n", "<c-t>", open_tree, { silent = true })
 
 -- Nvim window
-vim.keymap.set("n", "<space>", function()
-    require("nvim-window").pick()
-end, opts)
+vim.keymap.set("n", "<space>", function() require("nvim-window").pick() end)
 
 -- Zed compatibility
 -- make :E command open nvim-tree, use lua function to avoid vimscript

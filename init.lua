@@ -25,3 +25,4 @@ require("lazy").setup({ import = "plugins" }, {
 
 require('options')
 require('keymaps')
+require('lsp')

@@ -46,7 +46,7 @@ vim.opt.formatoptions:remove "o"
 vim.opt.whichwrap:append("h,l,<,>,[,],b,s")
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('sorbet')
+vim.cmd.colorscheme('catppuccin')
 
 vim.wo.foldmethod = 'expr'
 vim.wo.fen = false
