@@ -14,8 +14,10 @@ vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi")
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv")
 
--- Nvim tree toggle
-vim.keymap.set("n", "<c-t>", ":silent! NvimTreeFindFile<CR>", {silent = true})
+-- Nvim tree bindings
+local nvim_tree_api = require("nvim-tree.api")
+local open_tree = function() nvim_tree_api.tree.open({find_file = true, focus = true}) end
+vim.keymap.set("n", "<c-t>", open_tree, { silent = true })
 
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv")
@@ -25,3 +27,7 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("n", "<space>", function()
     require("nvim-window").pick()
 end, opts)
+
+-- Zed compatibility
+-- make :E command open nvim-tree, use lua function to avoid vimscript
+vim.api.nvim_create_user_command("E", open_tree, { nargs = 0})
