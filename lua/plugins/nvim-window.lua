@@ -1,5 +1,12 @@
+-- make it very lazy
+
 return {
-    "yorickpeterse/nvim-window", opts = {
+    "yorickpeterse/nvim-window",
+    keys = {
+        -- Nvim window
+        {"<space>", function() require("nvim-window").pick() end, desc = "Pick a window"},
+    },
+    opts = {
         chars = {
             "1",
             "2",

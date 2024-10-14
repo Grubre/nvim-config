@@ -1,11 +1,13 @@
 return {
     "lukas-reineke/indent-blankline.nvim",
+    lazy = false,
     main = "ibl",
     ---@module "ibl"
     ---@type ibl.config
     opts = {
-        scope = {
-            show_start = false
-        }
+        whitespace = {
+            remove_blankline_trail = true,
+        },
+        scope = { enabled = false },
     }
 }
