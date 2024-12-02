@@ -71,3 +71,8 @@ rt.setup({
         },
     }
 })
+
+-- verilog -> verible
+require('lspconfig').verible.setup {
+  cmd = { "verible-verilog-ls", "--rules_config_search", "--indentation_spaces=4", "--file_list_path", "verible.filelist" },
+}
