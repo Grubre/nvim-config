@@ -40,7 +40,7 @@ return {
             lualine_a = { "mode" },
             lualine_b = { "branch" },
             lualine_c = { "filename", "diagnostics" },
-            lualine_x = { copilot_indicator, "encoding", "fileformat", "filetype" },
+            lualine_x = { "copilot", "encoding", "fileformat", "filetype" },
             lualine_y = { "progress" },
             lualine_z = { "location" },
         },
