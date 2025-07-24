@@ -9,7 +9,7 @@ return {
                 auto_refresh = true,
             },
             suggestion = {
-                enabled = true,
+                enabled = false,
                 auto_trigger = true,
                 accept = false, -- disable built-in keymapping
             },
