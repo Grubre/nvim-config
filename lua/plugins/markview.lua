@@ -13,7 +13,7 @@ return  {
 
             --- Bracket conceal configuration.
             --- Shows () in specific cases
-            brackets = {
+            parenthesis = {
                 enable = true,
 
                 --- Highlight group for the ()
@@ -22,7 +22,7 @@ return  {
             },
 
             --- LaTeX blocks renderer
-            block = {
+            blocks = {
                 enable = true,
 
                 --- Highlight group for the block
@@ -38,12 +38,12 @@ return  {
             },
 
             --- Configuration for inline LaTeX maths
-            inline = {
+            inlines = {
                 enable = true
             },
 
             --- Configuration for operators(e.g. "\frac{1}{2}")
-            operators = {
+            commands = {
                 enable = true,
                 configs = {
                     sin = {
@@ -95,51 +95,15 @@ return  {
             --- Configuration for LaTeX symbols.
             symbols = {
                 enable = true,
-
-                --- Highlight group for the symbols.
-                ---@type string?
-                hl = "@operator.latex",
-
-                --- Allows adding/modifying symbol definitions.
-                overwrite = {
-                    --- Symbols can either be strings or functions.
-                    --- When the value is a function it receives the buffer
-                    --- id as the parameter.
-                    ---
-                    --- The resulting string is then used.
-                    ---@param buffer integer.
-                    today = function (buffer)
-                        return os.date("%d %B, %Y");
-                    end
-                },
-
-                --- Create groups of symbols to only change their
-                --- appearance.
-                groups = {
-                    {
-                        --- Matcher for this group.
-                        ---
-                        --- Can be a list of symbols or a function
-                        --- that takes the symbol as the parameter
-                        --- and either returns true or false.
-                        ---
-                        ---@type string[] | fun(symbol: string): boolean
-                        match = { "lim", "today" },
-
-                        --- Highlight group for this group.
-                        ---@type string
-                        hl = "Special"
-                    }
-                }
             },
 
-            subscript = {
+            subscripts = {
                 enable = true,
 
                 hl = "MarkviewLatexSubscript"
             },
 
-            superscript = {
+            superscripts = {
                 enable = true,
 
                 hl = "MarkviewLatexSuperscript"
