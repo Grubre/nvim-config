@@ -155,6 +155,9 @@ vim.api.nvim_create_user_command("E", open_tree, { nargs = 0})
 -- ================================================================
 -- MISC
 -- ================================================================
+vim.keymap.set("n", "<leader>fs", function()
+    vim.g.format_on_save = true
+end)
 
 -- PROFILING (https://www.reddit.com/r/neovim/comments/17a4m8q/why_is_my_neovim_laggy/), comment in the thread
 -- vim.keymap.set("n", "<leader>ups", function()
