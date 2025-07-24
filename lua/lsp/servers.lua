@@ -18,6 +18,7 @@ require("lspconfig").clangd.setup({
         "--clang-tidy",
         "--header-insertion=iwyu",
         "--background-index",
+        "--compile-commands-dir=build/debug"
     },
     on_attach = on_attach,
     flags = lsp_flags,
@@ -76,3 +77,6 @@ rt.setup({
 require('lspconfig').verible.setup {
   cmd = { "verible-verilog-ls", "--rules_config_search", "--indentation_spaces=4", "--file_list_path", "verible.filelist" },
 }
+
+-- odin -> ols
+require('lspconfig').ols.setup {}
