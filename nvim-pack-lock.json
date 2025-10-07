@@ -1,0 +1,40 @@
+{
+  "plugins": {
+    "fzf-lua": {
+      "rev": "a13c5c5",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "kanagawa.nvim": {
+      "rev": "27f1e11",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
+    "lsp_signature.nvim": {
+      "rev": "62cadce",
+      "src": "https://github.com/ray-x/lsp_signature.nvim"
+    },
+    "mini.icons": {
+      "rev": "2847986",
+      "src": "https://github.com/nvim-mini/mini.icons"
+    },
+    "nvim-autopairs": {
+      "rev": "23320e7",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-lspconfig": {
+      "rev": "e688b48",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-window": {
+      "rev": "a8d965f",
+      "src": "https://github.com/yorickpeterse/nvim-window"
+    },
+    "oil-git-status.nvim": {
+      "rev": "4b5cf53",
+      "src": "https://github.com/refractalize/oil-git-status.nvim"
+    },
+    "oil.nvim": {
+      "rev": "919e155",
+      "src": "https://github.com/stevearc/oil.nvim"
+    }
+  }
+}
