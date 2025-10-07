@@ -12,9 +12,21 @@
       "rev": "62cadce",
       "src": "https://github.com/ray-x/lsp_signature.nvim"
     },
+    "melange-nvim": {
+      "rev": "ce42f6b",
+      "src": "https://github.com/savq/melange-nvim"
+    },
     "mini.icons": {
       "rev": "2847986",
       "src": "https://github.com/nvim-mini/mini.icons"
+    },
+    "nordic.nvim": {
+      "rev": "6afe957",
+      "src": "https://github.com/AlexvZyl/nordic.nvim"
+    },
+    "nvim": {
+      "rev": "951d0c4",
+      "src": "https://github.com/everviolet/nvim"
     },
     "nvim-autopairs": {
       "rev": "23320e7",
@@ -32,9 +44,21 @@
       "rev": "4b5cf53",
       "src": "https://github.com/refractalize/oil-git-status.nvim"
     },
+    "oil-git.nvim": {
+      "rev": "d1f27a5",
+      "src": "https://github.com/benomahony/oil-git.nvim"
+    },
     "oil.nvim": {
       "rev": "919e155",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "rust-tools.nvim": {
+      "rev": "6761879",
+      "src": "https://github.com/simrat39/rust-tools.nvim"
+    },
+    "vim-nightfly-colors": {
+      "rev": "502136c",
+      "src": "https://github.com/bluz71/vim-nightfly-colors"
     }
   }
 }

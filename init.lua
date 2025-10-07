@@ -11,7 +11,7 @@ vim.o.swapfile = false
 vim.o.smartcase = true
 vim.o.smarttab = true
 vim.o.hlsearch = true
-vim.o.signcolumn = "auto:2"
+vim.o.signcolumn = "auto"
 vim.o.winborder = "rounded"
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
@@ -30,10 +30,13 @@ vim.opt.list = true
 vim.pack.add({
     -- colorschemes --
     {src = "https://github.com/rebelot/kanagawa.nvim"},
+    {src = "https://github.com/AlexvZyl/nordic.nvim"},
+    {src = "https://github.com/bluz71/vim-nightfly-colors"},
 
     -- lsp plugins --
     {src = "https://github.com/neovim/nvim-lspconfig"},
     {src = "https://github.com/ray-x/lsp_signature.nvim"},
+    {src = "https://github.com/simrat39/rust-tools.nvim"},
 
     -- oil plugins --
     {src = "https://github.com/stevearc/oil.nvim"},
@@ -46,7 +49,7 @@ vim.pack.add({
 })
 
 -- COLORSCHEME --
-vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("nightfly")
 
 -- OIL CONFIG --
 local oil_api = require("oil")
