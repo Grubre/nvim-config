@@ -37,8 +37,7 @@ vim.pack.add({
 
     -- oil plugins --
     {src = "https://github.com/stevearc/oil.nvim"},
-    {src = "https://github.com/refractalize/oil-git-status.nvim"},
-
+    {src = "https://github.com/benomahony/oil-git.nvim"},
     -- other plugins --
     {src = "https://github.com/nvim-mini/mini.icons"},
     {src = "https://github.com/ibhagwan/fzf-lua"},
@@ -66,7 +65,7 @@ require("mini.icons").setup()
 require("nvim-window").setup({chars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }})
 require("nvim-autopairs").setup({fast_wrap = {}})
 require("lsp_signature").setup()
-require("oil-git-status").setup()
+require("oil-git").setup()
 
 -- KEYMAPS --
 local opts = { silent = true }
