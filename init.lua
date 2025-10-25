@@ -101,7 +101,7 @@ vim.keymap.set("n", "<leader>g", FzfLua.live_grep, opts)
 vim.keymap.set("n", "g/", FzfLua.live_grep, opts)
 vim.keymap.set("v", "g/", FzfLua.grep_visual, opts)
 vim.keymap.set("n", "<leader>f", FzfLua.files, opts)
-vim.keymap.set("n", "<leader>fs", function()
+vim.keymap.set("n", "<leader>j", function()
     vim.g.format_on_save = not vim.g.format_on_save
     vim.notify("Format on save: "..tostring(vim.g.format_on_save))
 end)
