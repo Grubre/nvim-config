@@ -68,6 +68,18 @@ M.capabilites = capabilites
 M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
     vim.lsp.inlay_hint.enable()
+    if client:supports_method("textDocument/formatting") then
+        vim.api.nvim_clear_autocmds({ buffer = bufnr })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+                -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                if vim.g.format_on_save == true then
+                    vim.lsp.buf.format({ bufnr = bufnr })
+                end
+            end,
+        })
+    end
     require "lsp_signature".on_attach({}, bufnr)
 end
 
