@@ -50,6 +50,7 @@ vim.pack.add({
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/windwp/nvim-autopairs"},
     {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
+    {src = "https://github.com/lewis6991/gitsigns.nvim"},
 })
 
 -- COLORSCHEME --
@@ -88,6 +89,7 @@ require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '
 require("nvim-autopairs").setup({fast_wrap = {}})
 require("lsp_signature").setup()
 require("oil-git").setup()
+require('gitsigns').setup()
 
 -- KEYMAPS --
 local opts = { silent = true }

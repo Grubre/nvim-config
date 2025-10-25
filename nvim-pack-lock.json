@@ -4,6 +4,10 @@
       "rev": "a13c5c5",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
+    "gitsigns.nvim": {
+      "rev": "20ad441",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
     "kanagawa.nvim": {
       "rev": "27f1e11",
       "src": "https://github.com/rebelot/kanagawa.nvim"
