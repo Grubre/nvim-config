@@ -11,7 +11,9 @@ vim.o.swapfile = false
 vim.o.smartcase = true
 vim.o.smarttab = true
 vim.o.hlsearch = true
-vim.o.signcolumn = "auto"
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.signcolumn = "yes"
 vim.o.winborder = "rounded"
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
@@ -41,16 +43,33 @@ vim.pack.add({
     -- oil plugins --
     {src = "https://github.com/stevearc/oil.nvim"},
     {src = "https://github.com/benomahony/oil-git.nvim"},
+
     -- other plugins --
     {src = "https://github.com/nvim-mini/mini.icons"},
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/windwp/nvim-autopairs"},
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
 })
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")
 
+-- TRESITTER CONFIG --
+require'nvim-treesitter.configs'.setup {
+    auto_install = true,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            local max_filesize = 1 * 1024 * 1024 -- 1MB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        additional_vim_regex_highlighting = true,
+    },
+}
 -- OIL CONFIG --
 local oil_api = require("oil")
 oil_api.setup({
@@ -65,7 +84,7 @@ FzfLua.register_ui_select()
 
 -- OTHER PLUGINS CONFIG --
 require("mini.icons").setup()
-require("nvim-window").setup({chars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }})
+require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
 require("nvim-autopairs").setup({fast_wrap = {}})
 require("lsp_signature").setup()
 require("oil-git").setup()
@@ -82,5 +101,9 @@ vim.keymap.set("n", "<leader>g", FzfLua.live_grep, opts)
 vim.keymap.set("n", "g/", FzfLua.live_grep, opts)
 vim.keymap.set("v", "g/", FzfLua.grep_visual, opts)
 vim.keymap.set("n", "<leader>f", FzfLua.files, opts)
+vim.keymap.set("n", "<leader>fs", function()
+    vim.g.format_on_save = not vim.g.format_on_save
+    vim.notify("Format on save: "..tostring(vim.g.format_on_save))
+end)
 
 require("lsp")
