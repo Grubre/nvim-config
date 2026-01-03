@@ -44,33 +44,21 @@ vim.pack.add({
     {src = "https://github.com/stevearc/oil.nvim"},
     {src = "https://github.com/benomahony/oil-git.nvim"},
 
+    -- treesitter plugins --
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"},
+
     -- other plugins --
     {src = "https://github.com/nvim-mini/mini.icons"},
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/windwp/nvim-autopairs"},
-    {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
     {src = "https://github.com/lewis6991/gitsigns.nvim"},
 })
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")
 
--- TRESITTER CONFIG --
-require'nvim-treesitter.configs'.setup {
-    auto_install = true,
-    highlight = {
-        enable = true,
-        disable = function(lang, buf)
-            local max_filesize = 1 * 1024 * 1024 -- 1MB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then
-                return true
-            end
-        end,
-        additional_vim_regex_highlighting = true,
-    },
-}
 -- OIL CONFIG --
 local oil_api = require("oil")
 oil_api.setup({
@@ -107,5 +95,47 @@ vim.keymap.set("n", "<leader>j", function()
     vim.g.format_on_save = not vim.g.format_on_save
     vim.notify("Format on save: "..tostring(vim.g.format_on_save))
 end)
+
+-- TRESITTER CONFIG --
+require'nvim-treesitter.configs'.setup {
+    auto_install = true,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            local max_filesize = 1 * 1024 * 1024 -- 1MB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        additional_vim_regex_highlighting = true,
+    },
+    textobjects = {
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]]"] = { query = "@class.outer", desc = "Next class start" },
+                ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+                ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[["] = { query = "@class.outer", desc = "Previous class start" },
+                ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Previous scope" },
+                ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
+            }
+        }
+    },
+}
+
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+
+-- Repeat movement with ; and ,
+-- ensure ; goes forward and , goes backward regardless of the last direction
+vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
 
 require("lsp")
