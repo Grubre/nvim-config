@@ -48,16 +48,21 @@ vim.pack.add({
     {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
     {src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"},
 
-    -- other plugins --
+    -- mini plugins --
+    {src = "https://github.com/nvim-mini/mini.align"},
+    {src = "https://github.com/nvim-mini/mini.ai"},
     {src = "https://github.com/nvim-mini/mini.icons"},
+
+    -- other plugins --
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/windwp/nvim-autopairs"},
     {src = "https://github.com/lewis6991/gitsigns.nvim"},
-    {src = "https://github.com/nvim-mini/mini.ai"},
 })
 
+-- MINI PLUGINS SETUP --
 require('mini.ai').setup()
+require('mini.align').setup()
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")

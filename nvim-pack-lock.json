@@ -24,6 +24,10 @@
       "rev": "bfb26d9072670c3aaefab0f53024b2f3729c8083",
       "src": "https://github.com/nvim-mini/mini.ai"
     },
+    "mini.align": {
+      "rev": "85e495b0987bc6277411e5f2305fea6d5d91f50a",
+      "src": "https://github.com/nvim-mini/mini.align"
+    },
     "mini.icons": {
       "rev": "2847986",
       "src": "https://github.com/nvim-mini/mini.icons"
