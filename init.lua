@@ -52,6 +52,7 @@ vim.pack.add({
     {src = "https://github.com/nvim-mini/mini.align"},
     {src = "https://github.com/nvim-mini/mini.ai"},
     {src = "https://github.com/nvim-mini/mini.icons"},
+    {src = "https://github.com/nvim-mini/mini.surround"},
 
     -- other plugins --
     {src = "https://github.com/ibhagwan/fzf-lua"},
@@ -63,6 +64,7 @@ vim.pack.add({
 -- MINI PLUGINS SETUP --
 require('mini.ai').setup()
 require('mini.align').setup()
+require('mini.surround').setup()
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")
