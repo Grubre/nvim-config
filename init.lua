@@ -54,7 +54,10 @@ vim.pack.add({
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/windwp/nvim-autopairs"},
     {src = "https://github.com/lewis6991/gitsigns.nvim"},
+    {src = "https://github.com/nvim-mini/mini.ai"},
 })
+
+require('mini.ai').setup()
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")
@@ -119,6 +122,7 @@ require'nvim-treesitter.configs'.setup {
                 ["]]"] = { query = "@class.outer", desc = "Next class start" },
                 ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
                 ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+                ["]p"] = { query = "@parameter", query_group = "folds", desc = "Next Paremeter" },
             },
             goto_previous_start = {
                 ["[m"] = "@function.outer",

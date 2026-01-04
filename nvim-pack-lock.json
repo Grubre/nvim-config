@@ -20,6 +20,10 @@
       "rev": "ce42f6b",
       "src": "https://github.com/savq/melange-nvim"
     },
+    "mini.ai": {
+      "rev": "bfb26d9072670c3aaefab0f53024b2f3729c8083",
+      "src": "https://github.com/nvim-mini/mini.ai"
+    },
     "mini.icons": {
       "rev": "2847986",
       "src": "https://github.com/nvim-mini/mini.icons"
