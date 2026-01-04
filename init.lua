@@ -77,7 +77,10 @@ FzfLua.register_ui_select()
 -- OTHER PLUGINS CONFIG --
 require("mini.icons").setup()
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
-require("nvim-autopairs").setup({fast_wrap = {}})
+require("nvim-autopairs").setup({
+    fast_wrap = {},
+    map_cr = true,
+})
 require("lsp_signature").setup()
 require("oil-git").setup()
 require('gitsigns').setup()
@@ -102,6 +105,7 @@ end)
 -- TRESITTER CONFIG --
 require'nvim-treesitter.configs'.setup {
     auto_install = true,
+    indent = { enable = true, },
     highlight = {
         enable = true,
         disable = function(lang, buf)
@@ -122,7 +126,6 @@ require'nvim-treesitter.configs'.setup {
                 ["]]"] = { query = "@class.outer", desc = "Next class start" },
                 ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
                 ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-                ["]p"] = { query = "@parameter", query_group = "folds", desc = "Next Paremeter" },
             },
             goto_previous_start = {
                 ["[m"] = "@function.outer",
