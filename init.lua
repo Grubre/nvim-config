@@ -19,7 +19,7 @@ vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 vim.o.laststatus = 1
 vim.o.mouse = "a"
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 vim.opt.shortmess:append("c")
 vim.o.cindent = true
 vim.o.cinkeys = "0{,0},0),0],9#,!^F,o,0,e"
