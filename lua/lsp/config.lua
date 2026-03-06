@@ -2,7 +2,7 @@ local M = {}
 
 -- Lsp Keymaps --
 local lsp_keymaps = function(bufnr)
-    local opts = { buffer = true, noremap = true, silent = true }
+    local opts = { buffer = bufnr, noremap = true, silent = true }
 
     vim.keymap.set("n", "gd", FzfLua.lsp_definitions, opts)
     vim.keymap.set("n", "gi", FzfLua.lsp_implementations, opts)
@@ -10,8 +10,7 @@ local lsp_keymaps = function(bufnr)
     vim.keymap.set("n", "gr", FzfLua.lsp_references, opts)
 
     vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
-    vim.keymap.set("n", "cd", vim.lsp.buf.rename, opts)
-    -- -- Selects a code action available at the current cursor position
+    -- Selects a code action available at the current cursor position
     vim.keymap.set({"n", "x"}, "<leader>c", FzfLua.lsp_code_actions, opts)
     vim.keymap.set("n", "<leader>q", FzfLua.lsp_document_diagnostics , opts)
 end
@@ -25,17 +24,13 @@ M.setup = function()
                 [vim.diagnostic.severity.HINT] = "",
                 [vim.diagnostic.severity.INFO] = "",
             },
-            numhl = {
-                [vim.diagnostic.severity.ERROR] = "",
-                [vim.diagnostic.severity.WARN] = "",
-                [vim.diagnostic.severity.HINT] = "",
-                [vim.diagnostic.severity.INFO] = "",
-            },
         },
-        -- disable virtual text
-        virtual_text = false,
+        -- Enable virtual text
+        virtual_text = {
+            spacing = 4,
+            prefix = "●",
+        },
         update_in_insert = false,
-        --underline = true,
         severity_sort = true,
         float = {
             focusable = false,
@@ -49,33 +44,40 @@ M.setup = function()
 
     vim.diagnostic.config(config)
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-    })
+    -- Replacing deprecated vim.lsp.with()
+    vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+        return vim.lsp.handlers.hover(err, result, ctx, vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
+    end
 
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = "rounded",
-    })
+    vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+        return vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
+    end
 end
 
 -- Capabilities --
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.offsetEncoding = { "utf-16" }
 
-M.capabilites = capabilites
+M.capabilities = capabilities
+
+local formatting_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- On Attach --
 M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
-    vim.lsp.inlay_hint.enable()
+    
+    if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
     if client:supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ buffer = bufnr })
+        vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
         vim.api.nvim_create_autocmd("BufWritePre", {
+            group = formatting_augroup,
             buffer = bufnr,
             callback = function()
-                -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
                 if vim.g.format_on_save == true then
-                    vim.lsp.buf.format({ bufnr = bufnr })
+                    vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
                 end
             end,
         })
@@ -84,6 +86,6 @@ M.on_attach = function(client, bufnr)
 end
 
 -- Lsp Flags --
-M.lsp_flags = {}
+M.flags = {}
 
 return M
