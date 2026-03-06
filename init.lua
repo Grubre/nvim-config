@@ -40,7 +40,6 @@ vim.pack.add({
     -- lsp plugins --
     {src = "https://github.com/neovim/nvim-lspconfig"},
     {src = "https://github.com/ray-x/lsp_signature.nvim"},
-    {src = "https://github.com/simrat39/rust-tools.nvim"},
 
     -- oil plugins --
     {src = "https://github.com/stevearc/oil.nvim"},

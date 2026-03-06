@@ -69,11 +69,24 @@ vim.lsp.config("rust_analyzer", vim.tbl_deep_extend("force", default_config, {
             procMacro = {
                 enable = true,
             },
+            -- INLINE HINTS CONFIGURATION
+            inlayHints = {
+                bindingModeHints = { enabled = true },
+                chainingHints = { enabled = true },
+                closingBraceHints = { enabled = true },
+                closureReturnTypeHints = { enable = "always" },
+                lifetimeElisionHints = { enable = "always", useParameterNames = true },
+                parameterHints = { enabled = true },
+                reborrowHints = { enable = "always" },
+                renderColons = true,
+                typeHints = {
+                    enable = true,
+                    hideNamedTempTypes = false,
+                    hideClosureInitialization = false,
+                },
+            },
             diagnostics = {
                 enable = true,
-                experimental = {
-                    enable = true,
-                }
             }
         },
     },
