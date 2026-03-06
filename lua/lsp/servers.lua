@@ -51,26 +51,29 @@ vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_config, {
 vim.lsp.config("rust_analyzer", vim.tbl_deep_extend("force", default_config, {
     cmd = { "rust-analyzer" },
     filetypes = { "rust" },
-    root_markers = { "Cargo.toml", "rust-project.json" },
+    root_markers = { "Cargo.toml", "rust-project.json", ".git" },
     settings = {
         ["rust-analyzer"] = {
+            files = { watcher = "server" },
             cargo = {
                 allFeatures = true,
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
             },
-            -- This combination is the most robust for rust-analyzer
             checkOnSave = true,
             check = {
+                enable = true,
                 command = "clippy",
                 allFeatures = true,
-                extraArgs = { "--no-deps" },
             },
             procMacro = {
                 enable = true,
             },
             diagnostics = {
                 enable = true,
+                experimental = {
+                    enable = true,
+                }
             }
         },
     },
