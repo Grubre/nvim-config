@@ -13,6 +13,9 @@ local lsp_keymaps = function(bufnr)
     -- Selects a code action available at the current cursor position
     vim.keymap.set({"n", "x"}, "<leader>c", FzfLua.lsp_code_actions, opts)
     vim.keymap.set("n", "<leader>q", FzfLua.lsp_document_diagnostics , opts)
+    vim.keymap.set("n", "K", function()
+        vim.lsp.buf.hover({ border = "rounded" })
+    end, opts)
 end
 
 M.setup = function()
@@ -43,15 +46,6 @@ M.setup = function()
     }
 
     vim.diagnostic.config(config)
-
-    -- Replacing deprecated vim.lsp.with()
-    vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-        return vim.lsp.handlers.hover(err, result, ctx, vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
-    end
-
-    vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
-        return vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
-    end
 end
 
 -- Capabilities --
