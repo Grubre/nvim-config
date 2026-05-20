@@ -58,7 +58,7 @@ vim.pack.add({
     -- other plugins --
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
-    {src = "https://github.com/windwp/nvim-autopairs"},
+    {src = "https://github.com/nvim-mini/mini.pairs"},
     {src = "https://github.com/lewis6991/gitsigns.nvim"},
 })
 
@@ -85,10 +85,7 @@ FzfLua.register_ui_select()
 -- OTHER PLUGINS CONFIG --
 require("mini.icons").setup()
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
-require("nvim-autopairs").setup({
-    fast_wrap = {},
-    map_cr = true,
-})
+require("mini.pairs").setup()
 require("lsp_signature").setup()
 require("oil-git").setup()
 require('gitsigns').setup()
