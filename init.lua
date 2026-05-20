@@ -46,8 +46,8 @@ vim.pack.add({
     {src = "https://github.com/benomahony/oil-git.nvim"},
 
     -- treesitter plugins --
-    {src = "https://github.com/nvim-treesitter/nvim-treesitter"},
-    {src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"},
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main"},
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main"},
 
     -- mini plugins --
     {src = "https://github.com/nvim-mini/mini.align"},
@@ -110,41 +110,53 @@ vim.keymap.set("n", "<leader>j", function()
 end)
 
 -- TRESITTER CONFIG --
-require'nvim-treesitter.configs'.setup {
-    auto_install = true,
-    indent = { enable = true, },
-    highlight = {
-        enable = true,
-        disable = function(lang, buf)
+-- Enable highlighting and indentation using native Neovim APIs
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+        if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
+            -- Disable highlights for files larger than 1MB
             local max_filesize = 1 * 1024 * 1024 -- 1MB
-            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(args.buf))
             if ok and stats and stats.size > max_filesize then
-                return true
+                return
             end
-        end,
-        additional_vim_regex_highlighting = true,
-    },
-    textobjects = {
-        move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = {
-                ["]m"] = "@function.outer",
-                ["]]"] = { query = "@class.outer", desc = "Next class start" },
-                ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-                ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-            },
-            goto_previous_start = {
-                ["[m"] = "@function.outer",
-                ["[["] = { query = "@class.outer", desc = "Previous class start" },
-                ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Previous scope" },
-                ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
-            }
-        }
-    },
-}
+            vim.treesitter.start(args.buf, lang)
+            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+    end,
+})
 
-local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+-- Automatically install common parsers if they are missing
+local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash" }
+local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+for _, parser in ipairs(parsers) do
+    if not vim.list_contains(installed_parsers, parser) then
+        require("nvim-treesitter").install(parser)
+    end
+end
+
+-- Configure textobjects
+require("nvim-treesitter-textobjects").setup({
+    move = {
+        enable = true,
+        set_jumps = true,
+        goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = { query = "@class.outer", desc = "Next class start" },
+            ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+            ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+        },
+        goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = { query = "@class.outer", desc = "Previous class start" },
+            ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Previous scope" },
+            ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
+        }
+    }
+})
+
+local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
 
 -- Repeat movement with ; and ,
 -- ensure ; goes forward and , goes backward regardless of the last direction
