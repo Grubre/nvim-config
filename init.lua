@@ -43,7 +43,7 @@ vim.pack.add({
 
     -- oil plugins --
     {src = "https://github.com/stevearc/oil.nvim"},
-    {src = "https://github.com/benomahony/oil-git.nvim"},
+    {src = "https://github.com/refractalize/oil-git-status.nvim"},
 
     -- treesitter plugins --
     {src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main"},
@@ -73,7 +73,10 @@ vim.cmd.colorscheme("nightfly")
 -- OIL CONFIG --
 local oil_api = require("oil")
 oil_api.setup({
-    default_file_explorer = true
+    default_file_explorer = true,
+    win_options = {
+        signcolumn = "yes:2",
+    },
 })
 local open_oil = function() oil_api.open() end
 vim.api.nvim_create_user_command("E", open_oil, {nargs = 0})
@@ -87,7 +90,7 @@ require("mini.icons").setup()
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
 require("mini.pairs").setup()
 require("lsp_signature").setup()
-require("oil-git").setup()
+require("oil-git-status").setup()
 require('gitsigns').setup()
 
 -- KEYMAPS --
@@ -128,7 +131,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Automatically install common parsers if they are missing
-local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash" }
+local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json" }
 local installed_parsers = require("nvim-treesitter").get_installed("parsers")
 for _, parser in ipairs(parsers) do
     if not vim.list_contains(installed_parsers, parser) then
