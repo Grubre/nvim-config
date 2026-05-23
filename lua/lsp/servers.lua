@@ -101,9 +101,29 @@ vim.lsp.config("ols", vim.tbl_deep_extend("force", default_config, {
     filetypes = { "odin" },
 }))
 
+-- TypeScript / JavaScript
+vim.lsp.config("ts_ls", default_config)
+
+-- Tailwind CSS
+vim.lsp.config("tailwindcss", default_config)
+
+-- ESLint
+vim.lsp.config("eslint", default_config)
+
+-- HTML / CSS / JSON
+vim.lsp.config("html", default_config)
+vim.lsp.config("cssls", default_config)
+vim.lsp.config("jsonls", default_config)
+
 vim.lsp.enable("clangd")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("pyright")
 vim.lsp.enable("ols")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("verible")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("tailwindcss")
+vim.lsp.enable("eslint")
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
+vim.lsp.enable("jsonls")
