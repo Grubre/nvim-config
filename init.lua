@@ -131,7 +131,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Automatically install common parsers if they are missing
-local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json" }
+local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json", "c", "cpp" }
 local installed_parsers = require("nvim-treesitter").get_installed("parsers")
 for _, parser in ipairs(parsers) do
     if not vim.list_contains(installed_parsers, parser) then
