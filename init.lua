@@ -128,14 +128,15 @@ end, { desc = "Toggle diagnostic hover popups", silent = true })
 -- Enable highlighting and indentation using native Neovim APIs
 vim.api.nvim_create_autocmd("FileType", {
     callback = function(args)
+        -- Disable Treesitter for files larger than 1MB
+        local max_filesize = 1 * 1024 * 1024
+        local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(args.buf))
+        if stats and stats.size > max_filesize then
+            return
+        end
+
         local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
         if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
-            -- Disable highlights for files larger than 1MB
-            local max_filesize = 1 * 1024 * 1024 -- 1MB
-            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(args.buf))
-            if ok and stats and stats.size > max_filesize then
-                return
-            end
             vim.treesitter.start(args.buf, lang)
             vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
@@ -144,11 +145,16 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Automatically install common parsers if they are missing
 local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json", "c", "cpp" }
-local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+local treesitter = require("nvim-treesitter")
+local installed_parsers = treesitter.get_installed("parsers")
+local missing_parsers = {}
 for _, parser in ipairs(parsers) do
     if not vim.list_contains(installed_parsers, parser) then
-        require("nvim-treesitter").install(parser)
+        table.insert(missing_parsers, parser)
     end
+end
+if #missing_parsers > 0 then
+    treesitter.install(missing_parsers)
 end
 
 -- Configure textobjects
