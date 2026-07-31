@@ -28,11 +28,8 @@ M.setup = function()
                 [vim.diagnostic.severity.INFO] = "",
             },
         },
-        -- Enable virtual text
-        virtual_text = {
-            spacing = 4,
-            prefix = "●",
-        },
+        -- Disable virtual text
+        virtual_text = false,
         update_in_insert = false,
         severity_sort = true,
         float = {
@@ -46,6 +43,15 @@ M.setup = function()
     }
 
     vim.diagnostic.config(config)
+
+    -- Show diagnostics in a floating window on hover (CursorHold)
+    vim.api.nvim_create_autocmd("CursorHold", {
+        callback = function()
+            if vim.g.show_diagnostic_float ~= false then
+                vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+            end
+        end,
+    })
 end
 
 -- Capabilities --
