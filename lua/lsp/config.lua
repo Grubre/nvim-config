@@ -1,8 +1,10 @@
 local M = {}
+local diagnostic_float_win
+local show_diagnostic_float = true
 
 -- Lsp Keymaps --
 local lsp_keymaps = function(bufnr)
-    local opts = { buffer = bufnr, noremap = true, silent = true }
+    local opts = { buffer = bufnr, silent = true }
 
     vim.keymap.set("n", "gd", FzfLua.lsp_definitions, opts)
     vim.keymap.set("n", "gi", FzfLua.lsp_implementations, opts)
@@ -44,29 +46,50 @@ M.setup = function()
 
     vim.diagnostic.config(config)
 
+    local lsp_augroup = vim.api.nvim_create_augroup("LspConfig", { clear = true })
+
     -- Show diagnostics in a floating window on hover (CursorHold)
     vim.api.nvim_create_autocmd("CursorHold", {
+        group = lsp_augroup,
         callback = function()
-            if vim.g.show_diagnostic_float ~= false then
-                vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+            if show_diagnostic_float then
+                local _, winid = vim.diagnostic.open_float({ focus = false, scope = "cursor" })
+                diagnostic_float_win = winid
+            end
+        end,
+    })
+
+    vim.keymap.set("n", "<leader>d", function()
+        show_diagnostic_float = not show_diagnostic_float
+        vim.notify("Diagnostic hover popups " .. (show_diagnostic_float and "enabled" or "disabled"))
+
+        if
+            not show_diagnostic_float
+            and diagnostic_float_win
+            and vim.api.nvim_win_is_valid(diagnostic_float_win)
+        then
+            vim.api.nvim_win_close(diagnostic_float_win, true)
+        end
+    end, { desc = "Toggle diagnostic hover popups", silent = true })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+        group = lsp_augroup,
+        callback = function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client then
+                M.on_attach(client, args.buf)
             end
         end,
     })
 end
-
--- Capabilities --
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.offsetEncoding = { "utf-16" }
-
-M.capabilities = capabilities
 
 local formatting_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- On Attach --
 M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
-    
-    if client.server_capabilities.inlayHintProvider then
+
+    if client:supports_method("textDocument/inlayHint") then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
 
@@ -82,10 +105,6 @@ M.on_attach = function(client, bufnr)
             end,
         })
     end
-    require "lsp_signature".on_attach({}, bufnr)
 end
-
--- Lsp Flags --
-M.flags = {}
 
 return M

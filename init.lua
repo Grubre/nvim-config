@@ -110,20 +110,6 @@ vim.keymap.set("n", "<leader>j", function()
     vim.notify("Format on save: "..tostring(vim.g.format_on_save))
 end)
 
-vim.g.show_diagnostic_float = true
-vim.keymap.set("n", "<leader>d", function()
-    vim.g.show_diagnostic_float = not vim.g.show_diagnostic_float
-    local status = vim.g.show_diagnostic_float and "enabled" or "disabled"
-    vim.notify("Diagnostic hover popups " .. status)
-    if not vim.g.show_diagnostic_float then
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-            if vim.api.nvim_win_get_config(win).relative ~= "" then
-                vim.api.nvim_win_close(win, true)
-            end
-        end
-    end
-end, { desc = "Toggle diagnostic hover popups", silent = true })
-
 -- TRESITTER CONFIG --
 -- Enable highlighting and indentation using native Neovim APIs
 vim.api.nvim_create_autocmd("FileType", {

@@ -1,36 +1,21 @@
-local config = require("lsp.config")
-config.setup()
-local on_attach = config.on_attach
-local lsp_flags = config.flags
-local capabilities = config.capabilities
-
--- Helper to setup common options
-local default_config = {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
-
 -- C++ -> Clangd
-vim.lsp.config("clangd", vim.tbl_deep_extend("force", default_config, {
+vim.lsp.config("clangd", {
     cmd = {
         "clangd",
+        "--log=error",
         "--completion-style=bundled",
-        "--cross-file-rename",
         "--clang-tidy",
         "--header-insertion=iwyu",
         "--background-index",
     },
-    filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-}))
+})
 
 -- lua -> lua_ls
-vim.lsp.config("lua_ls", vim.tbl_deep_extend("force", default_config, {
-    filetypes = { "lua" },
+vim.lsp.config("lua_ls", {
     settings = {
         Lua = {
             diagnostics = {
-                globals = { "vim", "use" },
+                globals = { "vim" },
             },
             workspace = {
                 library = {
@@ -40,90 +25,44 @@ vim.lsp.config("lua_ls", vim.tbl_deep_extend("force", default_config, {
             },
         },
     },
-}))
-
--- python -> pyright
-vim.lsp.config("pyright", vim.tbl_deep_extend("force", default_config, {
-    filetypes = { "python" },
-}))
+})
 
 -- rust -> rust_analyzer
-vim.lsp.config("rust_analyzer", vim.tbl_deep_extend("force", default_config, {
-    cmd = { "rust-analyzer" },
-    filetypes = { "rust" },
-    root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+vim.lsp.config("rust_analyzer", {
     settings = {
         ["rust-analyzer"] = {
             files = { watcher = "server" },
             cargo = {
-                allFeatures = true,
-                loadOutDirsFromCheck = true,
-                runBuildScripts = true,
+                features = "all",
             },
-            checkOnSave = true,
             check = {
-                enable = true,
                 command = "clippy",
-                allFeatures = true,
+                features = "all",
             },
-            procMacro = {
-                enable = true,
-            },
-            -- INLINE HINTS CONFIGURATION
             inlayHints = {
-                bindingModeHints = { enabled = true },
-                chainingHints = { enabled = true },
-                closingBraceHints = { enabled = true },
+                bindingModeHints = { enable = true },
                 closureReturnTypeHints = { enable = "always" },
-                parameterHints = { enabled = true },
-                renderColons = true,
-                typeHints = {
-                    enable = true,
-                    hideNamedTempTypes = false,
-                    hideClosureInitialization = false,
-                },
             },
-            diagnostics = {
-                enable = true,
-            }
         },
     },
-}))
+})
 
 -- verilog -> verible
-vim.lsp.config("verible", vim.tbl_deep_extend("force", default_config, {
+vim.lsp.config("verible", {
     cmd = { "verible-verilog-ls", "--rules_config_search", "--indentation_spaces=4", "--file_list_path", "verible.filelist" },
-    filetypes = { "verilog", "systemverilog" },
-}))
+})
 
--- odin -> ols
-vim.lsp.config("ols", vim.tbl_deep_extend("force", default_config, {
-    filetypes = { "odin" },
-}))
-
--- TypeScript / JavaScript
-vim.lsp.config("ts_ls", default_config)
-
--- Tailwind CSS
-vim.lsp.config("tailwindcss", default_config)
-
--- ESLint
-vim.lsp.config("eslint", default_config)
-
--- HTML / CSS / JSON
-vim.lsp.config("html", default_config)
-vim.lsp.config("cssls", default_config)
-vim.lsp.config("jsonls", default_config)
-
-vim.lsp.enable("clangd")
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("pyright")
-vim.lsp.enable("ols")
-vim.lsp.enable("rust_analyzer")
-vim.lsp.enable("verible")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("tailwindcss")
-vim.lsp.enable("eslint")
-vim.lsp.enable("html")
-vim.lsp.enable("cssls")
-vim.lsp.enable("jsonls")
+vim.lsp.enable({
+    "clangd",
+    "lua_ls",
+    "pyright",
+    "ols",
+    "rust_analyzer",
+    "verible",
+    "ts_ls",
+    "tailwindcss",
+    "eslint",
+    "html",
+    "cssls",
+    "jsonls",
+})
