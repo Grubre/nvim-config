@@ -7,7 +7,6 @@ vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.numberwidth = 4
 vim.o.swapfile = false
-vim.o.smartcase = true
 vim.o.smarttab = true
 vim.o.hlsearch = true
 vim.o.splitright = true
