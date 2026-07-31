@@ -1,5 +1,4 @@
 -- OPTIONS --
-vim.loader.enable()
 vim.g.mapleader = "\\"
 vim.o.number = true
 vim.o.relativenumber = true
