@@ -103,7 +103,14 @@ vim.keymap.set("n", "<leader>g", FzfLua.live_grep, opts)
 vim.keymap.set("n", "g/", FzfLua.live_grep, opts)
 vim.keymap.set("v", "g/", FzfLua.grep_visual, opts)
 vim.keymap.set("n", "<leader>f", FzfLua.files, opts)
-vim.keymap.set("n", "<leader>s", FzfLua.treesitter, opts)
+vim.keymap.set("n", "<leader>s", function()
+    if #vim.lsp.get_clients({ bufnr = 0, method = "textDocument/documentSymbol" }) == 0 then
+        vim.notify("No LSP document-symbol provider is attached to this buffer", vim.log.levels.WARN)
+        return
+    end
+
+    FzfLua.lsp_document_symbols()
+end, { silent = true, desc = "Document symbols" })
 vim.keymap.set("n", "<leader>w", FzfLua.builtin, opts)
 vim.keymap.set("n", "<leader>j", function()
     vim.g.format_on_save = not vim.g.format_on_save
