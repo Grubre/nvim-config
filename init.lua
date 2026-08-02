@@ -117,7 +117,7 @@ vim.keymap.set("n", "<leader>j", function()
     vim.notify("Format on save: "..tostring(vim.g.format_on_save))
 end)
 
--- TRESITTER CONFIG --
+-- TREESITTER CONFIG --
 -- Enable highlighting and indentation using native Neovim APIs
 vim.api.nvim_create_autocmd("FileType", {
     callback = function(args)
@@ -153,29 +153,42 @@ end
 -- Configure textobjects
 require("nvim-treesitter-textobjects").setup({
     move = {
-        enable = true,
         set_jumps = true,
-        goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = { query = "@class.outer", desc = "Next class start" },
-            ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-            ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-        },
-        goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = { query = "@class.outer", desc = "Previous class start" },
-            ["[s"] = { query = "@local.scope", query_group = "locals", desc = "Previous scope" },
-            ["[z"] = { query = "@fold", query_group = "folds", desc = "Previous fold" },
-        }
-    }
+    },
 })
 
-local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
+local ts_move = require("nvim-treesitter-textobjects.move")
+
+local function map_ts_move(lhs, method, query, desc)
+    vim.keymap.set({ "n", "x", "o" }, lhs, function()
+        ts_move[method](query, "textobjects")
+    end, { silent = true, desc = desc })
+end
+
+-- Function/method motions.
+map_ts_move("]m", "goto_next_start", "@function.outer", "Next function start")
+map_ts_move("[m", "goto_previous_start", "@function.outer", "Previous function start")
+map_ts_move("]M", "goto_next_end", "@function.outer", "Current/next function end")
+map_ts_move("[M", "goto_previous_end", "@function.outer", "Previous function end")
+
+-- Class-like motions. In Rust this includes structs, enums, traits, impls, and modules.
+map_ts_move("]]", "goto_next_start", "@class.outer", "Next class-like block start")
+map_ts_move("[[", "goto_previous_start", "@class.outer", "Previous class-like block start")
+map_ts_move("][", "goto_next_end", "@class.outer", "Current/next class-like block end")
+map_ts_move("[]", "goto_previous_end", "@class.outer", "Previous class-like block end")
+
+local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
 
 -- Repeat movement with ; and ,
 -- ensure ; goes forward and , goes backward regardless of the last direction
 vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- Keep native f/F/t/T character motions repeatable after overriding ; and ,.
+vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 
 
 require("lsp")
