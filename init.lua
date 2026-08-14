@@ -1,5 +1,8 @@
 -- OPTIONS --
 vim.g.mapleader = "\\"
+-- Oil is the configured file explorer, so netrw is not needed.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.tabstop = 4
@@ -29,7 +32,9 @@ vim.opt.list = true
 vim.opt.indentkeys:remove(":")
 
 -- PACKAGE MANAGER --
-vim.pack.add({
+local loader = require("plugin_loader")
+
+loader.add({
     -- colorschemes --
     {src = "https://github.com/rebelot/kanagawa.nvim"},
     {src = "https://github.com/AlexvZyl/nordic.nvim"},
@@ -57,34 +62,28 @@ vim.pack.add({
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/nvim-mini/mini.pairs"},
+    {src = "https://github.com/lewis6991/gitsigns.nvim"},
+}, {
+    startup = {
+        "fzf-lua",
+        "kanagawa.nvim",
+        "nordic.nvim",
+        "vim-nightfly-colors",
+    },
 })
 
--- Gitsigns configures itself from its plugin script, so keep it off the
--- runtime path until that script should run.
-vim.pack.add({
-    {src = "https://github.com/lewis6991/gitsigns.nvim"},
-}, { load = function() end })
-
-local function after_startup(callback)
-    vim.api.nvim_create_autocmd("VimEnter", {
-        once = true,
-        callback = function()
-            vim.defer_fn(callback, 10)
-        end,
-    })
-end
-
-after_startup(function()
-    vim.cmd.packadd("gitsigns.nvim")
+-- Gitsigns configures itself when its plugin script is loaded.
+loader.defer(30, function()
+    loader.load("gitsigns.nvim")
 end)
 
 -- MINI PLUGINS SETUP --
-after_startup(function()
-    require('mini.ai').setup()
-    require('mini.align').setup()
-    require('mini.icons').setup()
-    require('mini.pairs').setup()
-    require('mini.surround').setup()
+loader.defer(20, function()
+    loader.require("mini.ai").setup()
+    loader.require("mini.align").setup()
+    loader.require("mini.icons").setup()
+    loader.require("mini.pairs").setup()
+    loader.require("mini.surround").setup()
 end)
 
 -- COLORSCHEME --
@@ -98,14 +97,14 @@ local function setup_oil()
         return
     end
 
-    oil_api = require("oil")
+    oil_api = loader.require("oil.nvim", "oil")
     oil_api.setup({
         default_file_explorer = true,
         win_options = {
             signcolumn = "yes:2",
         },
     })
-    require("oil-git-status").setup()
+    loader.require("oil-git-status.nvim", "oil-git-status").setup()
 end
 
 local function open_oil()
@@ -118,22 +117,34 @@ vim.api.nvim_create_user_command("E", open_oil, {nargs = 0})
 if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
     setup_oil()
 else
-    after_startup(setup_oil)
+    loader.defer(50, setup_oil)
 end
 
 -- FZF LUA CONFIG --
-after_startup(function()
-    require("fzf-lua").setup()
-    FzfLua.register_ui_select()
+loader.defer(10, function()
+    local fzf = loader.require("fzf-lua")
+    fzf.setup()
+    fzf.register_ui_select()
 end)
 
 -- OTHER PLUGINS CONFIG --
-require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
+local window_api
+
+local function setup_window()
+    if not window_api then
+        window_api = loader.require("nvim-window")
+        window_api.setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
+    end
+    return window_api
+end
+
+loader.defer(10, setup_window)
+
 -- Signature help is only needed after an LSP attaches.
 vim.api.nvim_create_autocmd("LspAttach", {
     once = true,
     callback = function()
-        require("lsp_signature").setup()
+        loader.require("lsp_signature.nvim", "lsp_signature").setup()
     end,
 })
 
@@ -141,7 +152,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local opts = { silent = true }
 -- general keymaps
 vim.keymap.set("n", "<leader>l", ":nohl<CR>", opts)
-vim.keymap.set("n", "<space>", require("nvim-window").pick, opts)
+vim.keymap.set("n", "<space>", function()
+    setup_window().pick()
+end, opts)
 -- oil keymaps
 vim.keymap.set("n", "<leader>e", open_oil, opts)
 -- fzf-lua keymaps
@@ -176,6 +189,7 @@ local function start_treesitter(buf)
         return
     end
 
+    loader.require("nvim-treesitter")
     local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
     if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
         vim.treesitter.start(buf, lang)
@@ -198,20 +212,23 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Automatically install common parsers if they are missing
 local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json", "c", "cpp" }
-local treesitter = require("nvim-treesitter")
-local installed_parsers = treesitter.get_installed("parsers")
-local missing_parsers = {}
-for _, parser in ipairs(parsers) do
-    if not vim.list_contains(installed_parsers, parser) then
-        table.insert(missing_parsers, parser)
+loader.defer(1000, function()
+    local treesitter = loader.require("nvim-treesitter")
+    local installed_parsers = treesitter.get_installed("parsers")
+    local missing_parsers = {}
+    for _, parser in ipairs(parsers) do
+        if not vim.list_contains(installed_parsers, parser) then
+            table.insert(missing_parsers, parser)
+        end
     end
-end
-if #missing_parsers > 0 then
-    treesitter.install(missing_parsers)
-end
+    if #missing_parsers > 0 then
+        treesitter.install(missing_parsers)
+    end
+end)
 
 local function setup_treesitter_textobjects()
-    require("nvim-treesitter-textobjects").setup({
+    loader.require("nvim-treesitter")
+    loader.require("nvim-treesitter-textobjects").setup({
         move = {
             set_jumps = true,
         },
@@ -251,6 +268,8 @@ local function setup_treesitter_textobjects()
     vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 end
 
-after_startup(setup_treesitter_textobjects)
+loader.defer(10, setup_treesitter_textobjects)
 
-require("lsp")
+loader.defer(10, function()
+    loader.require("nvim-lspconfig", "lsp")
+end)
