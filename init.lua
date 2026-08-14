@@ -87,9 +87,13 @@ FzfLua.register_ui_select()
 require("mini.icons").setup()
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
 require("mini.pairs").setup()
-require("lsp_signature").setup()
 require("oil-git-status").setup()
 require('gitsigns').setup()
+-- Signature help is only needed after an LSP attaches.
+vim.api.nvim_create_autocmd("LspAttach", {
+    once = true,
+    callback = require("lsp_signature").setup,
+})
 
 -- KEYMAPS --
 local opts = { silent = true }
