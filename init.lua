@@ -181,44 +181,47 @@ if #missing_parsers > 0 then
     treesitter.install(missing_parsers)
 end
 
--- Configure textobjects
-require("nvim-treesitter-textobjects").setup({
-    move = {
-        set_jumps = true,
-    },
-})
+local function setup_treesitter_textobjects()
+    require("nvim-treesitter-textobjects").setup({
+        move = {
+            set_jumps = true,
+        },
+    })
 
-local ts_move = require("nvim-treesitter-textobjects.move")
+    local ts_move = require("nvim-treesitter-textobjects.move")
 
-local function map_ts_move(lhs, method, query, desc)
-    vim.keymap.set({ "n", "x", "o" }, lhs, function()
-        ts_move[method](query, "textobjects")
-    end, { silent = true, desc = desc })
+    local function map_ts_move(lhs, method, query, desc)
+        vim.keymap.set({ "n", "x", "o" }, lhs, function()
+            ts_move[method](query, "textobjects")
+        end, { silent = true, desc = desc })
+    end
+
+    -- Function/method motions.
+    map_ts_move("]m", "goto_next_start", "@function.outer", "Next function start")
+    map_ts_move("[m", "goto_previous_start", "@function.outer", "Previous function start")
+    map_ts_move("]M", "goto_next_end", "@function.outer", "Current/next function end")
+    map_ts_move("[M", "goto_previous_end", "@function.outer", "Previous function end")
+
+    -- Class-like motions. In Rust this includes structs, enums, traits, impls, and modules.
+    map_ts_move("]]", "goto_next_start", "@class.outer", "Next class-like block start")
+    map_ts_move("[[", "goto_previous_start", "@class.outer", "Previous class-like block start")
+    map_ts_move("][", "goto_next_end", "@class.outer", "Current/next class-like block end")
+    map_ts_move("[]", "goto_previous_end", "@class.outer", "Previous class-like block end")
+
+    local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+
+    -- Repeat movement with ; and ,
+    -- ensure ; goes forward and , goes backward regardless of the last direction
+    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+    -- Keep native f/F/t/T character motions repeatable after overriding ; and ,.
+    vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+    vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+    vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+    vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 end
 
--- Function/method motions.
-map_ts_move("]m", "goto_next_start", "@function.outer", "Next function start")
-map_ts_move("[m", "goto_previous_start", "@function.outer", "Previous function start")
-map_ts_move("]M", "goto_next_end", "@function.outer", "Current/next function end")
-map_ts_move("[M", "goto_previous_end", "@function.outer", "Previous function end")
-
--- Class-like motions. In Rust this includes structs, enums, traits, impls, and modules.
-map_ts_move("]]", "goto_next_start", "@class.outer", "Next class-like block start")
-map_ts_move("[[", "goto_previous_start", "@class.outer", "Previous class-like block start")
-map_ts_move("][", "goto_next_end", "@class.outer", "Current/next class-like block end")
-map_ts_move("[]", "goto_previous_end", "@class.outer", "Previous class-like block end")
-
-local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
-
--- Repeat movement with ; and ,
--- ensure ; goes forward and , goes backward regardless of the last direction
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-
--- Keep native f/F/t/T character motions repeatable after overriding ; and ,.
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+after_startup(setup_treesitter_textobjects)
 
 require("lsp")
