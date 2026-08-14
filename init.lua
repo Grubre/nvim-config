@@ -57,8 +57,13 @@ vim.pack.add({
     {src = "https://github.com/ibhagwan/fzf-lua"},
     {src = "https://github.com/yorickpeterse/nvim-window"},
     {src = "https://github.com/nvim-mini/mini.pairs"},
-    {src = "https://github.com/lewis6991/gitsigns.nvim"},
 })
+
+-- Gitsigns configures itself from its plugin script, so keep it off the
+-- runtime path until that script should run.
+vim.pack.add({
+    {src = "https://github.com/lewis6991/gitsigns.nvim"},
+}, { load = function() end })
 
 local function after_startup(callback)
     vim.api.nvim_create_autocmd("VimEnter", {
@@ -68,6 +73,10 @@ local function after_startup(callback)
         end,
     })
 end
+
+after_startup(function()
+    vim.cmd.packadd("gitsigns.nvim")
+end)
 
 -- MINI PLUGINS SETUP --
 after_startup(function()
@@ -120,7 +129,6 @@ end)
 
 -- OTHER PLUGINS CONFIG --
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
-require('gitsigns').setup()
 -- Signature help is only needed after an LSP attaches.
 vim.api.nvim_create_autocmd("LspAttach", {
     once = true,
