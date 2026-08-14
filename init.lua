@@ -132,7 +132,9 @@ require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '
 -- Signature help is only needed after an LSP attaches.
 vim.api.nvim_create_autocmd("LspAttach", {
     once = true,
-    callback = require("lsp_signature").setup,
+    callback = function()
+        require("lsp_signature").setup()
+    end,
 })
 
 -- KEYMAPS --
