@@ -118,20 +118,34 @@ vim.keymap.set("n", "<leader>j", function()
 end)
 
 -- TREESITTER CONFIG --
--- Enable highlighting and indentation using native Neovim APIs
+local function start_treesitter(buf)
+    if not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_buf_is_loaded(buf) then
+        return
+    end
+
+    -- Disable Treesitter for files larger than 1MB
+    local max_filesize = 1 * 1024 * 1024
+    local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
+    if stats and stats.size > max_filesize then
+        return
+    end
+
+    local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+    if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
+        vim.treesitter.start(buf, lang)
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     callback = function(args)
-        -- Disable Treesitter for files larger than 1MB
-        local max_filesize = 1 * 1024 * 1024
-        local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(args.buf))
-        if stats and stats.size > max_filesize then
-            return
-        end
-
-        local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
-        if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
-            vim.treesitter.start(args.buf, lang)
-            vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        local buf = args.buf
+        -- C/C++ highlight queries are expensive to compile. Let startup draw
+        -- its first screen with regex highlighting, then enable Treesitter.
+        if vim.v.vim_did_enter == 0 then
+            vim.defer_fn(function() start_treesitter(buf) end, 100)
+        else
+            start_treesitter(buf)
         end
     end,
 })
@@ -189,6 +203,5 @@ vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = t
 vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
 vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
 vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-
 
 require("lsp")
