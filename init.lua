@@ -70,9 +70,13 @@ local function after_startup(callback)
 end
 
 -- MINI PLUGINS SETUP --
-require('mini.ai').setup()
-require('mini.align').setup()
-require('mini.surround').setup()
+after_startup(function()
+    require('mini.ai').setup()
+    require('mini.align').setup()
+    require('mini.icons').setup()
+    require('mini.pairs').setup()
+    require('mini.surround').setup()
+end)
 
 -- COLORSCHEME --
 vim.cmd.colorscheme("nightfly")
@@ -95,9 +99,7 @@ after_startup(function()
 end)
 
 -- OTHER PLUGINS CONFIG --
-require("mini.icons").setup()
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
-require("mini.pairs").setup()
 require("oil-git-status").setup()
 require('gitsigns').setup()
 -- Signature help is only needed after an LSP attaches.
