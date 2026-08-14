@@ -82,15 +82,35 @@ end)
 vim.cmd.colorscheme("nightfly")
 
 -- OIL CONFIG --
-local oil_api = require("oil")
-oil_api.setup({
-    default_file_explorer = true,
-    win_options = {
-        signcolumn = "yes:2",
-    },
-})
-local open_oil = function() oil_api.open() end
+local oil_api
+
+local function setup_oil()
+    if oil_api then
+        return
+    end
+
+    oil_api = require("oil")
+    oil_api.setup({
+        default_file_explorer = true,
+        win_options = {
+            signcolumn = "yes:2",
+        },
+    })
+    require("oil-git-status").setup()
+end
+
+local function open_oil()
+    setup_oil()
+    oil_api.open()
+end
+
 vim.api.nvim_create_user_command("E", open_oil, {nargs = 0})
+
+if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+    setup_oil()
+else
+    after_startup(setup_oil)
+end
 
 -- FZF LUA CONFIG --
 after_startup(function()
@@ -100,7 +120,6 @@ end)
 
 -- OTHER PLUGINS CONFIG --
 require("nvim-window").setup({chars = {'1', '2', '3', '4', '5', '6', '7', '8', '9' }})
-require("oil-git-status").setup()
 require('gitsigns').setup()
 -- Signature help is only needed after an LSP attaches.
 vim.api.nvim_create_autocmd("LspAttach", {
