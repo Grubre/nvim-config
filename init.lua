@@ -60,6 +60,15 @@ vim.pack.add({
     {src = "https://github.com/lewis6991/gitsigns.nvim"},
 })
 
+local function after_startup(callback)
+    vim.api.nvim_create_autocmd("VimEnter", {
+        once = true,
+        callback = function()
+            vim.defer_fn(callback, 10)
+        end,
+    })
+end
+
 -- MINI PLUGINS SETUP --
 require('mini.ai').setup()
 require('mini.align').setup()
@@ -80,8 +89,10 @@ local open_oil = function() oil_api.open() end
 vim.api.nvim_create_user_command("E", open_oil, {nargs = 0})
 
 -- FZF LUA CONFIG --
-require("fzf-lua").setup()
-FzfLua.register_ui_select()
+after_startup(function()
+    require("fzf-lua").setup()
+    FzfLua.register_ui_select()
+end)
 
 -- OTHER PLUGINS CONFIG --
 require("mini.icons").setup()
@@ -103,19 +114,19 @@ vim.keymap.set("n", "<space>", require("nvim-window").pick, opts)
 -- oil keymaps
 vim.keymap.set("n", "<leader>e", open_oil, opts)
 -- fzf-lua keymaps
-vim.keymap.set("n", "<leader>g", FzfLua.live_grep, opts)
-vim.keymap.set("n", "g/", FzfLua.live_grep, opts)
-vim.keymap.set("v", "g/", FzfLua.grep_visual, opts)
-vim.keymap.set("n", "<leader>f", FzfLua.files, opts)
+vim.keymap.set("n", "<leader>g", "<cmd>FzfLua live_grep<CR>", opts)
+vim.keymap.set("n", "g/", "<cmd>FzfLua live_grep<CR>", opts)
+vim.keymap.set("v", "g/", "<cmd>FzfLua grep_visual<CR>", opts)
+vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>", opts)
 vim.keymap.set("n", "<leader>s", function()
     if #vim.lsp.get_clients({ bufnr = 0, method = "textDocument/documentSymbol" }) == 0 then
         vim.notify("No LSP document-symbol provider is attached to this buffer", vim.log.levels.WARN)
         return
     end
 
-    FzfLua.lsp_document_symbols()
+    vim.cmd.FzfLua("lsp_document_symbols")
 end, { silent = true, desc = "Document symbols" })
-vim.keymap.set("n", "<leader>w", FzfLua.builtin, opts)
+vim.keymap.set("n", "<leader>w", "<cmd>FzfLua builtin<CR>", opts)
 vim.keymap.set("n", "<leader>j", function()
     vim.g.format_on_save = not vim.g.format_on_save
     vim.notify("Format on save: "..tostring(vim.g.format_on_save))

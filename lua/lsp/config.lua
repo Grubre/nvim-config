@@ -6,15 +6,15 @@ local show_diagnostic_float = true
 local lsp_keymaps = function(bufnr)
     local opts = { buffer = bufnr, silent = true }
 
-    vim.keymap.set("n", "gd", FzfLua.lsp_definitions, opts)
-    vim.keymap.set("n", "gi", FzfLua.lsp_implementations, opts)
-    vim.keymap.set("n", "gt", FzfLua.lsp_typedefs, opts)
-    vim.keymap.set("n", "gr", FzfLua.lsp_references, opts)
+    vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", opts)
+    vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", opts)
+    vim.keymap.set("n", "gt", "<cmd>FzfLua lsp_typedefs<CR>", opts)
+    vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<CR>", opts)
 
     vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
     -- Selects a code action available at the current cursor position
-    vim.keymap.set({"n", "x"}, "<leader>c", FzfLua.lsp_code_actions, opts)
-    vim.keymap.set("n", "<leader>q", FzfLua.lsp_document_diagnostics , opts)
+    vim.keymap.set({"n", "x"}, "<leader>c", "<cmd>FzfLua lsp_code_actions<CR>", opts)
+    vim.keymap.set("n", "<leader>q", "<cmd>FzfLua lsp_document_diagnostics<CR>", opts)
     vim.keymap.set("n", "K", function()
         vim.lsp.buf.hover({ border = "rounded" })
     end, opts)
