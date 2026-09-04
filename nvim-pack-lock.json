@@ -16,10 +16,6 @@
       "rev": "b7ace9ddb1640ce266012a45a672dfdaedfa5ec6",
       "src": "https://github.com/ray-x/lsp_signature.nvim"
     },
-    "melange-nvim": {
-      "rev": "ce42f6b",
-      "src": "https://github.com/savq/melange-nvim"
-    },
     "mini.ai": {
       "rev": "25248c6aa002391936a6200f12d1466015987133",
       "src": "https://github.com/nvim-mini/mini.ai"
@@ -44,14 +40,6 @@
       "rev": "9fb62116b891184049c50ca6ffb0d3bc100a1a6e",
       "src": "https://github.com/AlexvZyl/nordic.nvim"
     },
-    "nvim": {
-      "rev": "c8e5e7e67a36694e5d917b7065b26b59b8cb489f",
-      "src": "https://github.com/everviolet/nvim"
-    },
-    "nvim-autopairs": {
-      "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
-      "src": "https://github.com/windwp/nvim-autopairs"
-    },
     "nvim-lspconfig": {
       "rev": "84252f9832fb5b9024fe9f7258e7c2aff915e6fb",
       "src": "https://github.com/neovim/nvim-lspconfig"
@@ -74,25 +62,9 @@
       "rev": "a3e2ccb00cb8822115e28a9a1791eda051d940c9",
       "src": "https://github.com/refractalize/oil-git-status.nvim"
     },
-    "oil-git.nvim": {
-      "rev": "95b0d83f70e5e3e889f4d2f8b70eba5185ff67b6",
-      "src": "https://github.com/benomahony/oil-git.nvim"
-    },
     "oil.nvim": {
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
-    },
-    "rust-tools.nvim": {
-      "rev": "6761879",
-      "src": "https://github.com/simrat39/rust-tools.nvim"
-    },
-    "rustaceanvim": {
-      "rev": "9499318abe813fd36da9be3bca4a52765f7c24f9",
-      "src": "https://github.com/mrcjkb/rustaceanvim"
-    },
-    "tokyonight.nvim": {
-      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
-      "src": "https://github.com/folke/tokyonight.nvim"
     },
     "vim-nightfly-colors": {
       "rev": "2c31d07ce05efa92bcb7f893f9c74a846226c898",

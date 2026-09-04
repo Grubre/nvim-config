@@ -29,9 +29,6 @@ local lsp_keymaps = function(bufnr)
     -- Selects a code action available at the current cursor position
     vim.keymap.set({"n", "x"}, "<leader>c", "<cmd>FzfLua lsp_code_actions<CR>", opts)
     vim.keymap.set("n", "<leader>q", "<cmd>FzfLua lsp_document_diagnostics<CR>", opts)
-    vim.keymap.set("n", "K", function()
-        vim.lsp.buf.hover({ border = "rounded" })
-    end, opts)
 end
 
 M.setup = function()
@@ -112,6 +109,12 @@ M.on_attach = function(client, bufnr)
 
     if client:supports_method("textDocument/inlayHint", bufnr) then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    if client:supports_method("textDocument/completion", bufnr) then
+        -- Preserve manual omnifunc completion while enabling resolved
+        -- documentation, snippets, additional edits, and commit characters.
+        vim.lsp.completion.enable(true, client.id, bufnr)
     end
 end
 

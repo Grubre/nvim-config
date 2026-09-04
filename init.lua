@@ -1,9 +1,8 @@
 -- OPTIONS --
 vim.g.mapleader = "\\"
 vim.g.format_on_save = false
--- Oil is the configured file explorer, so netrw is not needed.
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- Oil supports filesystem edits and git status, unlike the core 0.13 browser.
+vim.g.loaded_nvim_dir_plugin = 1
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.tabstop = 4
@@ -15,13 +14,14 @@ vim.o.splitbelow = true
 vim.o.signcolumn = "yes"
 vim.o.winborder = "rounded"
 vim.o.scrolloff = 8
+vim.o.scrolloffpad = 1
 vim.o.sidescrolloff = 8
 vim.o.laststatus = 1
 vim.o.mouse = "a"
-vim.opt.completeopt = { "menu", "menuone", "noinsert" }
+vim.o.completeopt = { "menu", "menuone", "noinsert", "popup" }
 vim.opt.shortmess:append("c")
 vim.o.updatetime = 0
-vim.opt.whichwrap:append("h,l,<,>,[,]")
+vim.o.whichwrap = { "h", "l", "<", ">", "[", "]" }
 vim.opt.termguicolors = true
 vim.opt.list = true
 
@@ -108,7 +108,10 @@ local function open_oil()
     oil_api.open()
 end
 
-vim.api.nvim_create_user_command("E", open_oil, {nargs = 0})
+vim.api.nvim_create_user_command("E", open_oil, {
+    nargs = 0,
+    desc = "Open Oil file explorer",
+})
 
 if vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
     setup_oil()
@@ -154,8 +157,7 @@ end, opts)
 -- oil keymaps
 vim.keymap.set("n", "<leader>e", open_oil, opts)
 -- fzf-lua keymaps
-vim.keymap.set("n", "<leader>g", "<cmd>FzfLua live_grep<CR>", opts)
-vim.keymap.set("n", "g/", "<cmd>FzfLua live_grep<CR>", opts)
+vim.keymap.set("n", { "<leader>g", "g/" }, "<cmd>FzfLua live_grep<CR>", opts)
 vim.keymap.set("v", "g/", "<cmd>FzfLua grep_visual<CR>", opts)
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>", opts)
 vim.keymap.set("n", "<leader>s", function()
@@ -194,11 +196,11 @@ local function start_treesitter(buf)
         return
     end
 
-    loader.require("nvim-treesitter")
+    local treesitter = loader.require("nvim-treesitter")
     local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
     if lang and vim.treesitter.language.add(lang) and vim.treesitter.query.get(lang, "highlights") then
         vim.treesitter.start(buf, lang)
-        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.bo[buf].indentexpr = treesitter.indentexpr
     end
 end
 
