@@ -1,5 +1,6 @@
 -- OPTIONS --
 vim.g.mapleader = "\\"
+vim.g.format_on_save = false
 -- Oil is the configured file explorer, so netrw is not needed.
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -8,10 +9,7 @@ vim.o.relativenumber = true
 vim.o.tabstop = 4
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
-vim.o.numberwidth = 4
 vim.o.swapfile = false
-vim.o.smarttab = true
-vim.o.hlsearch = true
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.signcolumn = "yes"
@@ -22,14 +20,10 @@ vim.o.laststatus = 1
 vim.o.mouse = "a"
 vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 vim.opt.shortmess:append("c")
-vim.o.cindent = true
-vim.o.cinkeys = "0{,0},0),0],9#,!^F,o,0,e"
 vim.o.updatetime = 0
-vim.opt.whichwrap:append("h,l,<,>,[,],b,s")
+vim.opt.whichwrap:append("h,l,<,>,[,]")
 vim.opt.termguicolors = true
 vim.opt.list = true
-
-vim.opt.indentkeys:remove(":")
 
 -- PACKAGE MANAGER --
 local loader = require("plugin_loader")
@@ -81,7 +75,6 @@ end)
 loader.defer(20, function()
     loader.require("mini.ai").setup()
     loader.require("mini.align").setup()
-    loader.require("mini.icons").setup()
     loader.require("mini.pairs").setup()
     loader.require("mini.surround").setup()
 end)
@@ -97,6 +90,9 @@ local function setup_oil()
         return
     end
 
+    -- Oil detects and caches its icon provider when oil.columns is first loaded.
+    -- Set up mini.icons first, including when Neovim starts on a directory.
+    loader.require("mini.icons").setup()
     oil_api = loader.require("oil.nvim", "oil")
     oil_api.setup({
         default_file_explorer = true,
@@ -151,7 +147,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- KEYMAPS --
 local opts = { silent = true }
 -- general keymaps
-vim.keymap.set("n", "<leader>l", ":nohl<CR>", opts)
+vim.keymap.set("n", "<leader>l", "<cmd>nohlsearch<CR>", opts)
 vim.keymap.set("n", "<space>", function()
     setup_window().pick()
 end, opts)
@@ -173,8 +169,17 @@ end, { silent = true, desc = "Document symbols" })
 vim.keymap.set("n", "<leader>w", "<cmd>FzfLua builtin<CR>", opts)
 vim.keymap.set("n", "<leader>j", function()
     vim.g.format_on_save = not vim.g.format_on_save
-    vim.notify("Format on save: "..tostring(vim.g.format_on_save))
-end)
+    vim.notify("Format on save: " .. tostring(vim.g.format_on_save))
+end, { silent = true, desc = "Toggle format on save" })
+
+-- Do not treat the first ':' in C++ scope resolution as a label delimiter.
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "cpp",
+    callback = function()
+        vim.opt_local.cinkeys:remove(":")
+        vim.opt_local.indentkeys:remove(":")
+    end,
+})
 
 -- TREESITTER CONFIG --
 local function start_treesitter(buf)
@@ -211,7 +216,22 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Automatically install common parsers if they are missing
-local parsers = { "lua", "vim", "vimdoc", "markdown", "rust", "bash", "typescript", "tsx", "html", "css", "json", "c", "cpp" }
+local parsers = {
+    "lua",
+    "vim",
+    "vimdoc",
+    "markdown",
+    "rust",
+    "bash",
+    "typescript",
+    "tsx",
+    "html",
+    "css",
+    "json",
+    "c",
+    "cpp",
+    "gdscript",
+}
 loader.defer(1000, function()
     local treesitter = loader.require("nvim-treesitter")
     local installed_parsers = treesitter.get_installed("parsers")

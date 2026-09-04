@@ -2,6 +2,20 @@ local M = {}
 local diagnostic_float_win
 local show_diagnostic_float = true
 
+local function format_buffer(bufnr)
+    local clients = vim.lsp.get_clients({
+        bufnr = bufnr,
+        method = "textDocument/formatting",
+    })
+    local client = vim.iter(clients):find(function(candidate)
+        return candidate.name == "eslint"
+    end) or clients[1]
+
+    if client then
+        vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
+    end
+end
+
 -- Lsp Keymaps --
 local lsp_keymaps = function(bufnr)
     local opts = { buffer = bufnr, silent = true }
@@ -59,6 +73,15 @@ M.setup = function()
         end,
     })
 
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = lsp_augroup,
+        callback = function(args)
+            if vim.g.format_on_save then
+                format_buffer(args.buf)
+            end
+        end,
+    })
+
     vim.keymap.set("n", "<leader>d", function()
         show_diagnostic_float = not show_diagnostic_float
         vim.notify("Diagnostic hover popups " .. (show_diagnostic_float and "enabled" or "disabled"))
@@ -83,27 +106,12 @@ M.setup = function()
     })
 end
 
-local formatting_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
 -- On Attach --
 M.on_attach = function(client, bufnr)
     lsp_keymaps(bufnr)
 
-    if client:supports_method("textDocument/inlayHint") then
+    if client:supports_method("textDocument/inlayHint", bufnr) then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    end
-
-    if client:supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = formatting_augroup, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = formatting_augroup,
-            buffer = bufnr,
-            callback = function()
-                if vim.g.format_on_save == true then
-                    vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
-                end
-            end,
-        })
     end
 end
 

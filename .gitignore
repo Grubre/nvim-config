@@ -1,2 +1,4 @@
 plugin/
 .antigravitycli/
+nvim.log
+starttime.txt

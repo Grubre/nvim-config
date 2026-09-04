@@ -49,7 +49,13 @@ vim.lsp.config("rust_analyzer", {
 
 -- verilog -> verible
 vim.lsp.config("verible", {
-    cmd = { "verible-verilog-ls", "--rules_config_search", "--indentation_spaces=4", "--file_list_path", "verible.filelist" },
+    cmd = {
+        "verible-verilog-ls",
+        "--rules_config_search",
+        "--indentation_spaces=4",
+        "--file_list_path",
+        "verible.filelist",
+    },
 })
 
 vim.lsp.enable({
@@ -65,4 +71,5 @@ vim.lsp.enable({
     "html",
     "cssls",
     "jsonls",
+    "gdscript",
 })
