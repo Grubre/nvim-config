@@ -26,6 +26,12 @@ vim.o.updatetime = 0
 vim.o.whichwrap = { "h", "l", "<", ">", "[", "]" }
 vim.opt.termguicolors = true
 vim.opt.list = true
+vim.o.wildmode = "noselect:full"
+
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+    pattern = ":",
+    callback = function() vim.fn.wildtrigger() end,
+})
 
 -- PACKAGE MANAGER --
 local loader = require("plugin_loader")
@@ -98,6 +104,18 @@ local function setup_oil()
     oil_api = loader.require("oil.nvim", "oil")
     oil_api.setup({
         default_file_explorer = true,
+        keymaps = {
+            ["g:"] = {
+                function()
+                    local dir = oil_api.get_current_dir() or vim.api.nvim_buf_get_name(0)
+                    return ":Oil " .. vim.fn.fnameescape(dir)
+                end,
+                mode = "n",
+                expr = true,
+                replace_keycodes = false,
+                desc = "Edit Oil directory path",
+            },
+        },
         win_options = {
             signcolumn = "yes:2",
         },
