@@ -142,7 +142,17 @@ end
 -- FZF LUA CONFIG --
 loader.defer(10, function()
     local fzf = loader.require("fzf-lua")
-    fzf.setup()
+    fzf.setup({
+        zoxide = {
+            actions = {
+                enter = function(selected)
+                    if not selected[1] then return end
+                    setup_oil()
+                    oil_api.open(selected[1]:match("[^\t]+$"))
+                end,
+            },
+        },
+    })
     fzf.register_ui_select()
 end)
 
@@ -180,6 +190,7 @@ vim.keymap.set("n", "<leader>e", open_oil, opts)
 vim.keymap.set("n", { "<leader>g", "g/" }, "<cmd>FzfLua live_grep<CR>", opts)
 vim.keymap.set("v", "g/", "<cmd>FzfLua grep_visual<CR>", opts)
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua files<CR>", opts)
+vim.keymap.set("n", "<leader>z", "<cmd>FzfLua zoxide<CR>", { desc = "Jump to directory in Oil" })
 vim.keymap.set("n", "<leader>s", function()
     if #vim.lsp.get_clients({ bufnr = 0, method = "textDocument/documentSymbol" }) == 0 then
         vim.notify("No LSP document-symbol provider is attached to this buffer", vim.log.levels.WARN)
