@@ -1,6 +1,8 @@
 -- OPTIONS --
 vim.g.mapleader = "\\"
 vim.g.format_on_save = false
+-- Keep our indentation settings; the GDScript ftplugin otherwise forces tabs.
+vim.g.gdscript_recommended_style = 0
 -- Oil supports filesystem edits and git status, unlike the core 0.13 browser.
 vim.g.loaded_nvim_dir_plugin = 1
 vim.o.number = true
