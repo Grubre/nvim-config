@@ -27,6 +27,7 @@ vim.o.whichwrap = { "h", "l", "<", ">", "[", "]" }
 vim.opt.termguicolors = true
 vim.opt.list = true
 vim.o.wildmode = "noselect:full"
+vim.opt.clipboard = "unnamedplus"
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
     pattern = ":",
