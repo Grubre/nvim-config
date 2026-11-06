@@ -265,7 +265,11 @@ local parsers = {
     "c",
     "cpp",
     "gdscript",
+    "odin",
+    "haskell",
+    "gdscript",
 }
+
 loader.defer(1000, function()
     local treesitter = loader.require("nvim-treesitter")
     local installed_parsers = treesitter.get_installed("parsers")
